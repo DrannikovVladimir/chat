@@ -22,7 +22,7 @@ const UserProvider = ({ children }) => {
     localStorage.setItem('user', JSON.stringify({ username, token }));
     setUser({ username });
   };
-  console.log(user);
+
   return (
     <UserContext.Provider value={{ user, logIn }}>
       {children}
