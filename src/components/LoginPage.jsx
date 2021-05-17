@@ -10,7 +10,7 @@ import {
 import axios from 'axios';
 import { useLocation, useHistory } from 'react-router-dom';
 
-import useUser from '../hooks/index.jsx';
+import { useUser } from '../hooks/index.jsx';
 
 const LoginPage = () => {
   const user = useUser();

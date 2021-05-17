@@ -1,22 +1,23 @@
 import React from 'react';
-import { useFormik } from 'formik';
 
-const Messages = ({ messages }) => {
-  const formik = useFormik({
-    initialValues: {
-      body: '',
-    },
-    onSubmit: (values) => {
-      console.log(values);
-    },
-  });
-
+const Messages = ({ children, messages }) => {
+  console.log(messages);
   const renderMessages = (items) => {
     if (items.length === 0) {
       return null;
     }
 
-    return items;
+    return (
+      <div className="chat-messages overflow-auto mb-3">
+        {messages.map(({ id, text, user }) => (
+          <div key={id} className="text-break">
+            <b>{user}</b>
+            :
+            {` ${text}`}
+          </div>
+        ))}
+      </div>
+    );
   };
 
   return (
@@ -25,23 +26,7 @@ const Messages = ({ messages }) => {
         <div id="messages-box" className="chat-messages overflow-auto mb-3">
           {renderMessages(messages)}
         </div>
-        <div className="mt-auto">
-          <form onSubmit={formik.handleSubmit}>
-            <div className="input-group">
-              <input
-                type="text"
-                name="body"
-                aria-label="body"
-                className="form-control"
-                onChange={formik.handleChange}
-                value={formik.values.body}
-              />
-              <div className="input-group-append">
-                <button type="submit" className="btn btn-primary">Отправить</button>
-              </div>
-            </div>
-          </form>
-        </div>
+        {children}
       </div>
     </div>
   );
