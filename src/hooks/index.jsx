@@ -1,7 +1,8 @@
 import { useContext } from 'react';
 
-import UserContext from '../contexts/index.jsx';
+import { UserContext, SocketContext } from '../contexts/index.jsx';
 
 const useUser = () => useContext(UserContext);
+const useSocket = () => useContext(SocketContext);
 
-export default useUser;
+export { useUser, useSocket };
