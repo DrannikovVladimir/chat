@@ -5,9 +5,9 @@ import {
   Route,
   Redirect,
 } from 'react-router-dom';
-import UserContext from '../contexts/index.jsx';
 
-import useUser from '../hooks/index.jsx';
+import { UserContext } from '../contexts/index.jsx';
+import { useUser } from '../hooks/index.jsx';
 import ChatPage from './ChatPage.jsx';
 import LoginPage from './LoginPage.jsx';
 import NotFoundPage from './NotFoundPage.jsx';
