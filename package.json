@@ -21,8 +21,6 @@
   "license": "ISC",
   "homepage": "",
   "dependencies": {
-    "@reduxjs/toolkit": "^1.5.1",
-    "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
     "core-js": "^3.10.1",
     "debug": "^4.3.1",
@@ -33,7 +31,6 @@
     "fastify-sensible": "^3.1.1",
     "fastify-socket.io": "^1.0.2",
     "fastify-static": "^4.0.1",
-    "formik": "^2.2.7",
     "http-errors": "^1.8.0",
     "jquery": "^3.6.0",
     "lodash": "^4.17.21",
@@ -41,14 +38,7 @@
     "point-of-view": "^4.14.0",
     "popper.js": "^1.16.1",
     "pug": "^3.0.2",
-    "react": "^17.0.2",
-    "react-bootstrap": "^1.6.0",
-    "react-dom": "^17.0.2",
-    "react-redux": "^7.2.4",
-    "react-router-dom": "^5.2.0",
-    "regenerator-runtime": "^0.13.7",
-    "socket.io-client": "^4.1.2",
-    "yup": "^0.32.9"
+    "regenerator-runtime": "^0.13.7"
   },
   "devDependencies": {
     "@babel/cli": "^7.13.14",
