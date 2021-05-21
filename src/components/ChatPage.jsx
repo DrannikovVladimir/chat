@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import { setInitialState } from '../slices/channelsSlice.js';
 import Channels from './Channels.jsx';
@@ -18,8 +18,7 @@ const getAuthHeader = () => {
 
 const ChatPage = () => {
   const dispatch = useDispatch();
-  const { channels, currentChannelId } = useSelector((state) => state.channels);
-  const { messages } = useSelector((state) => state.messages);
+
   useEffect(() => {
     const fetchContent = async () => {
       const { data } = await axios.get('/api/v1/data', { headers: getAuthHeader() });
@@ -31,8 +30,8 @@ const ChatPage = () => {
 
   return (
     <div className="row pb-5 flex-grow-1 h-75 pb-3">
-      <Channels channels={channels} currentChannelId={currentChannelId} />
-      <Messages messages={messages}>
+      <Channels />
+      <Messages>
         <FormMessage />
       </Messages>
     </div>

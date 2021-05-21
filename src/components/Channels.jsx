@@ -1,35 +1,105 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Dropdown, Button, ButtonGroup } from 'react-bootstrap';
 
-const Channels = ({ channels, currentChannelId }) => {
+import { setChannel } from '../slices/channelsSlice.js';
+import { openModal } from '../slices/modalsSlice.js';
+import ModalNewChannel from './modals/ModalNewChannel.jsx';
+import ModalRemoveChannel from './modals/ModalRemoveChannel.jsx';
+import ModalRenameChannel from './modals/ModalRenameChannel.jsx';
+
+const Channels = () => {
+  const dispatch = useDispatch();
+  const { type: modalType } = useSelector((state) => state.modals);
+  const { channels, currentChannelId } = useSelector((state) => state.channels);
   const renderChannels = (items) => {
     if (items.length === 0) {
       return null;
     }
 
+    const setChannelHandler = (id) => () => {
+      dispatch(setChannel({ id }));
+    };
+
+    const openModalHandler = (type, channelId) => () => {
+      dispatch(openModal({ type, channelId }));
+    };
+
     return (
-      <ul className="nav flex-column nav-pills nav-fill">
-        {items.map(({ id, name }) => {
-          console.log(id);
-          return (
+      <>
+        <ul className="nav flex-column nav-pills nav-fill">
+          {items.map(({ id, name, removable }) => (
             <li key={id} className="nav-item">
-              <button
-                type="button"
-                className={`nav-link btn-block mb-2 text-left btn btn-${id === currentChannelId ? 'primary' : 'light'}`}
-              >
-                {name}
-              </button>
+              {
+              removable
+                ? (
+                  <Dropdown as={ButtonGroup} className="d-flex mb-2">
+                    <Button
+                      variant={id === currentChannelId ? 'primary' : 'light'}
+                      className="flex-grow-1 text-left nav-link"
+                      onClick={setChannelHandler(id)}
+                    >
+                      {name}
+                    </Button>
+
+                    <Dropdown.Toggle
+                      split
+                      variant={id === currentChannelId ? 'primary' : 'light'}
+                      id="dropdown-split-basic"
+                      className="flex-grow-0"
+                    />
+
+                    <Dropdown.Menu>
+                      <Dropdown.Item
+                        href=""
+                        onClick={openModalHandler('removeChannel', { id })}
+                      >
+                        Удалить
+                      </Dropdown.Item>
+                      <Dropdown.Item
+                        href=""
+                        onClick={openModalHandler('renameChannel', { id })}
+                      >
+                        Переименовать
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                )
+                : (
+                  <button
+                    type="button"
+                    className={`nav-link btn-block mb-2 text-left btn btn-primary ${id === currentChannelId ? 'btn-primary' : 'btn-light'}`}
+                    onClick={setChannelHandler(id)}
+                  >
+                    {name}
+                  </button>
+                )
+            }
             </li>
-          );
-        })}
-      </ul>
+          ))}
+        </ul>
+        {modalType === 'newChannel' && <ModalNewChannel />}
+        {modalType === 'removeChannel' && <ModalRemoveChannel />}
+        {modalType === 'renameChannel' && <ModalRenameChannel />}
+      </>
     );
+  };
+
+  const newChannelHandler = (type, channelId = null) => () => {
+    dispatch(openModal({ type, channelId }));
   };
 
   return (
     <div className="col-3 border-right">
       <div className="d-flex mb-2">
         <span>Каналы</span>
-        <button type="button" className="ml-auto p-0 btn btn-link">+</button>
+        <button
+          onClick={newChannelHandler('newChannel')}
+          type="button"
+          className="ml-auto p-0 btn btn-link"
+        >
+          +
+        </button>
       </div>
       {renderChannels(channels)}
     </div>

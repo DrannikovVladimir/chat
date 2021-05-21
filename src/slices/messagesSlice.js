@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { setInitialState } from './channelsSlice.js';
+import { setInitialState, removeChannel } from './channelsSlice.js';
 
 export const messagesSlice = createSlice({
   name: 'messages',
@@ -9,15 +9,18 @@ export const messagesSlice = createSlice({
   reducers: {
     addMessage: (state, { payload }) => {
       const { message } = payload;
-      console.log(message);
       const messages = [...state.messages, message];
-      console.log(messages);
       return { messages };
     },
   },
   extraReducers: {
     [setInitialState]: (state, { payload }) => {
       const { messages } = payload;
+      return { messages };
+    },
+    [removeChannel]: (state, { payload }) => {
+      const { id } = payload;
+      const messages = state.messages.filter(({ channelId }) => channelId !== id);
       return { messages };
     },
   },

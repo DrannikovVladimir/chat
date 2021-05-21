@@ -47,19 +47,21 @@ const App = () => {
   console.log('App');
   return (
     <UserProvider>
-      <Router>
-        <Switch>
-          <ChatRoute exact path="/">
-            <ChatPage />
-          </ChatRoute>
-          <Route path="/login">
-            <LoginPage />
-          </Route>
-          <Route>
-            <NotFoundPage />
-          </Route>
-        </Switch>
-      </Router>
+      <div className="d-flex flex-column h-100">
+        <Router>
+          <Switch>
+            <ChatRoute exact path="/">
+              <ChatPage />
+            </ChatRoute>
+            <Route path="/login">
+              <LoginPage />
+            </Route>
+            <Route>
+              <NotFoundPage />
+            </Route>
+          </Switch>
+        </Router>
+      </div>
     </UserProvider>
   );
 };

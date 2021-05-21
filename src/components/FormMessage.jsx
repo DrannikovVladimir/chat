@@ -14,7 +14,6 @@ const FormMessage = () => {
     onSubmit: (values, acitons) => {
       try {
         const message = { text: values.body, user: username, channelId: currentChannelId };
-        console.log(message);
         socket.emit('newMessage', message, () => {});
         acitons.resetForm();
       } catch (err) {
