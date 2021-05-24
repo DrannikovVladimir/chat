@@ -38,7 +38,7 @@ const ModalNewChannel = () => {
 
   useEffect(() => {
     inputRef.current.focus();
-  });
+  }, []);
 
   const modalCloseHandler = () => {
     dispatch(closeModal());

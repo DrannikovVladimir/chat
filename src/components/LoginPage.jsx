@@ -8,7 +8,7 @@ import {
   Col,
 } from 'react-bootstrap';
 import axios from 'axios';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation, useHistory, Link } from 'react-router-dom';
 
 import { useUser } from '../hooks/index.jsx';
 
@@ -78,7 +78,7 @@ const LoginPage = () => {
             <Button type="submit" className="w-100 mb-3 btn outline-primary">Войти</Button>
             <Container className="d-flex flex-column align-items-center">
               <span className="small mb-2">Нет аккаунта?</span>
-              <a href="/signup">Регистрация</a>
+              <Link to="/signup">Регистрация</Link>
             </Container>
           </Form>
         </Col>

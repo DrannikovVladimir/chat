@@ -10,6 +10,8 @@ import { UserContext } from '../contexts/index.jsx';
 import { useUser } from '../hooks/index.jsx';
 import ChatPage from './ChatPage.jsx';
 import LoginPage from './LoginPage.jsx';
+import SignUpPage from './SignUpPage.jsx';
+import NavBar from './NavBar.jsx';
 import NotFoundPage from './NotFoundPage.jsx';
 
 const UserProvider = ({ children }) => {
@@ -22,9 +24,13 @@ const UserProvider = ({ children }) => {
     localStorage.setItem('user', JSON.stringify({ username, token }));
     setUser({ username });
   };
+  const logOut = () => {
+    localStorage.removeItem('user');
+    setUser(null);
+  };
 
   return (
-    <UserContext.Provider value={{ user, logIn }}>
+    <UserContext.Provider value={{ user, logIn, logOut }}>
       {children}
     </UserContext.Provider>
   );
@@ -48,6 +54,7 @@ const App = () => {
   return (
     <UserProvider>
       <div className="d-flex flex-column h-100">
+        <NavBar />
         <Router>
           <Switch>
             <ChatRoute exact path="/">
@@ -55,6 +62,9 @@ const App = () => {
             </ChatRoute>
             <Route path="/login">
               <LoginPage />
+            </Route>
+            <Route path="/signup">
+              <SignUpPage />
             </Route>
             <Route>
               <NotFoundPage />
