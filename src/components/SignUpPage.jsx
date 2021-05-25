@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Form,
   Button,
@@ -14,6 +15,7 @@ import * as Yup from 'yup';
 import { useUser } from '../hooks/index.jsx';
 
 const SignUpPage = () => {
+  const { t } = useTranslation();
   const history = useHistory();
   const user = useUser();
   const userRef = useRef();
@@ -24,10 +26,15 @@ const SignUpPage = () => {
       passwordConfirmation: '',
     },
     validationSchema: Yup.object({
-      username: Yup.string().required().min(3).max(20),
-      password: Yup.string().required().min(6),
+      username: Yup.string()
+        .required(`${t('validation.required')}`)
+        .min(3, `${t('validation.username')}`)
+        .max(20, `${t('validation.username')}`),
+      password: Yup.string()
+        .required(`${t('validation.required')}`)
+        .min(6, `${t('validation.password')}`),
       passwordConfirmation: Yup.string()
-        .oneOf([Yup.ref('password'), null]),
+        .oneOf([Yup.ref('password'), null], `${t('validation.passwordConfirmation')}`),
     }),
     onSubmit: async (values, actions) => {
       try {
@@ -38,7 +45,7 @@ const SignUpPage = () => {
         actions.resetForm();
       } catch (err) {
         if (err.response.status === 409) {
-          actions.setFieldError('passwordConfirmation', 'Такой пользователь уже существует');
+          actions.setFieldError('passwordConfirmation', `${t('registrationForm.error')}`);
           actions.setFieldError('password', ' ');
           actions.setFieldError('username', ' ');
           actions.setStatus('invalid');
@@ -58,12 +65,12 @@ const SignUpPage = () => {
         <Col sm="4">
           <Form className="pt-3" onSubmit={formik.handleSubmit}>
             <Form.Group>
-              <Form.Label htmlFor="username">Имя пользователя</Form.Label>
+              <Form.Label htmlFor="username">{t('registrationForm.username')}</Form.Label>
               <Form.Control
                 type="text"
                 name="username"
                 id="username"
-                placeholder="От 3 до 20 сиволов"
+                placeholder={t('registrationForm.usernamePlaceholder')}
                 autoComplete="username"
                 onChange={formik.handleChange}
                 value={formik.values.username}
@@ -73,12 +80,12 @@ const SignUpPage = () => {
               <Form.Control.Feedback type="invalid">{formik.errors.username}</Form.Control.Feedback>
             </Form.Group>
             <Form.Group>
-              <Form.Label htmlFor="password">Пароль</Form.Label>
+              <Form.Label htmlFor="password">{t('registrationForm.password')}</Form.Label>
               <Form.Control
                 type="password"
                 name="password"
                 id="password"
-                placeholder="Не менее 6 символов"
+                placeholder={t('registrationForm.passwordPlaceholder')}
                 autoComplete="new-password"
                 onChange={formik.handleChange}
                 value={formik.values.password}
@@ -87,12 +94,12 @@ const SignUpPage = () => {
               <Form.Control.Feedback type="invalid">{formik.errors.password}</Form.Control.Feedback>
             </Form.Group>
             <Form.Group>
-              <Form.Label htmlFor="passwordConfirmation">Пароль</Form.Label>
+              <Form.Label htmlFor="passwordConfirmation">{t('registrationForm.passwordConfirmation')}</Form.Label>
               <Form.Control
                 type="password"
                 name="passwordConfirmation"
                 id="passwordConfirmation"
-                placeholder="Пароли должны совпадать"
+                placeholder={t('registrationForm.passwordConfirmationPlaceholder')}
                 autoComplete="new-password"
                 onChange={formik.handleChange}
                 value={formik.values.passwordConfirmation}
@@ -106,7 +113,7 @@ const SignUpPage = () => {
               className="w-100 outline-primary"
               disabled={formik.isSubmitting}
             >
-              Зарегистрироваться
+              {t('registrationForm.registrationButton')}
             </Button>
           </Form>
         </Col>

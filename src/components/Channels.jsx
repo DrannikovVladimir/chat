@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dropdown, Button, ButtonGroup } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 
 import { setChannel } from '../slices/channelsSlice.js';
 import { openModal } from '../slices/modalsSlice.js';
@@ -9,6 +10,7 @@ import ModalRemoveChannel from './modals/ModalRemoveChannel.jsx';
 import ModalRenameChannel from './modals/ModalRenameChannel.jsx';
 
 const Channels = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const { type: modalType } = useSelector((state) => state.modals);
   const { channels, currentChannelId } = useSelector((state) => state.channels);
@@ -54,13 +56,13 @@ const Channels = () => {
                         href=""
                         onClick={openModalHandler('removeChannel', { id })}
                       >
-                        Удалить
+                        {t('channels.remove')}
                       </Dropdown.Item>
                       <Dropdown.Item
                         href=""
                         onClick={openModalHandler('renameChannel', { id })}
                       >
-                        Переименовать
+                        {t('channels.rename')}
                       </Dropdown.Item>
                     </Dropdown.Menu>
                   </Dropdown>
@@ -92,7 +94,7 @@ const Channels = () => {
   return (
     <div className="col-3 border-right">
       <div className="d-flex mb-2">
-        <span>Каналы</span>
+        <span>{t('channels.title')}</span>
         <button
           onClick={newChannelHandler('newChannel')}
           type="button"

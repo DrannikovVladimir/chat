@@ -9,10 +9,12 @@ import {
 } from 'react-bootstrap';
 import axios from 'axios';
 import { useLocation, useHistory, Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import { useUser } from '../hooks/index.jsx';
 
 const LoginPage = () => {
+  const { t } = useTranslation();
   const user = useUser();
   const location = useLocation();
   const history = useHistory();
@@ -48,7 +50,7 @@ const LoginPage = () => {
         <Col sm="4">
           <Form className="p-3" onSubmit={formik.handleSubmit}>
             <Form.Group>
-              <Form.Label htmlFor="username">Ваш ник</Form.Label>
+              <Form.Label htmlFor="username">{t('loginForm.username')}</Form.Label>
               <Form.Control
                 id="username"
                 type="text"
@@ -62,7 +64,7 @@ const LoginPage = () => {
               />
             </Form.Group>
             <Form.Group>
-              <Form.Label htmlFor="password">Пароль</Form.Label>
+              <Form.Label htmlFor="password">{t('loginForm.password')}</Form.Label>
               <Form.Control
                 id="password"
                 name="password"
@@ -73,12 +75,12 @@ const LoginPage = () => {
                 value={formik.values.password}
                 isInvalid={userFailed}
               />
-              <Form.Control.Feedback type="invalid">The username or password is incorrect!</Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">{t('loginForm.error')}</Form.Control.Feedback>
             </Form.Group>
             <Button type="submit" className="w-100 mb-3 btn outline-primary">Войти</Button>
             <Container className="d-flex flex-column align-items-center">
-              <span className="small mb-2">Нет аккаунта?</span>
-              <Link to="/signup">Регистрация</Link>
+              <span className="small mb-2">{t('loginForm.noAccount')}</span>
+              <Link to="/signup">{t('loginForm.registration')}</Link>
             </Container>
           </Form>
         </Col>

@@ -1,9 +1,12 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useFormik } from 'formik';
+import { useTranslation } from 'react-i18next';
+
 import { useSocket, useUser } from '../hooks/index.jsx';
 
 const FormMessage = () => {
+  const { t } = useTranslation();
   const currentChannelId = useSelector((state) => state.channels.currentChannelId);
   const socket = useSocket();
   const { user: { username } } = useUser();
@@ -35,7 +38,7 @@ const FormMessage = () => {
             value={formik.values.body}
           />
           <div className="input-group-append">
-            <button type="submit" className="btn btn-primary">Отправить</button>
+            <button type="submit" className="btn btn-primary">{t('messageForm.button')}</button>
           </div>
         </div>
       </form>
