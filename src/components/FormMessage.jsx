@@ -34,6 +34,7 @@ const FormMessage = () => {
             name="body"
             aria-label="body"
             className="form-control"
+            data-testid="new-message"
             onChange={formik.handleChange}
             value={formik.values.body}
           />

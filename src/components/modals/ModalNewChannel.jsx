@@ -60,6 +60,7 @@ const ModalNewChannel = () => {
             <Form.Control
               type="text"
               name="name"
+              data-testid="add-channel"
               onChange={formik.handleChange}
               value={formik.values.name}
               isInvalid={formik.errors.name}

@@ -31,7 +31,7 @@ export default {
       usernamePlaceholder: 'От 3 до 20 сиволов',
       password: 'Пароль',
       passwordPlaceholder: 'Не менее 6 символов',
-      passwordConfirmation: 'Пароль',
+      passwordConfirmation: 'Подтвердите пароль',
       passwordConfirmationPlaceholder: 'Пароли должны совпадать',
       registrationButton: 'Зарегистрироваться',
       error: 'Такой пользователь уже существует',

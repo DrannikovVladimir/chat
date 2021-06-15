@@ -61,6 +61,7 @@ const ModalRenameChannel = () => {
             <Form.Control
               type="text"
               name="name"
+              data-testid="rename-channel"
               onChange={formik.handleChange}
               value={formik.values.name}
               isInvalid={formik.errors.name}
