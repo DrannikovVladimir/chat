@@ -3,6 +3,7 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import i18n from 'i18next';
 import { I18nextProvider } from 'react-i18next';
+import Rollbar, { RollbarContext } from 'rollbar';
 
 import store from './app/store.js';
 import resources from './locales/locales.js';
@@ -18,11 +19,19 @@ const SocketProvider = ({ children, socket }) => (
 );
 
 const run = async (socket) => {
+  const rollbar = new Rollbar({
+    accessToken: '7139cb6f908947c2b6166d41e28fe1a1',
+    captureUncaught: true,
+    captureUnhandledRejections: true,
+    payload: {
+      environment: 'production',
+    },
+  });
+
   const i18nInstance = i18n.createInstance();
   await i18nInstance.init({
     lng: 'ru',
     resources,
-    debug: true,
   });
 
   socket.on('newMessage', (message) => store.dispatch(addMessage({ message })));
@@ -31,13 +40,15 @@ const run = async (socket) => {
   socket.on('renameChannel', (channel) => store.dispatch(renameChannel(channel)));
 
   return render(
-    <SocketProvider socket={socket}>
-      <I18nextProvider i18n={i18nInstance}>
-        <Provider store={store}>
-          <App />
-        </Provider>
-      </I18nextProvider>
-    </SocketProvider>,
+    <RollbarContext context={rollbar}>
+      <SocketProvider socket={socket}>
+        <I18nextProvider i18n={i18nInstance}>
+          <Provider store={store}>
+            <App />
+          </Provider>
+        </I18nextProvider>
+      </SocketProvider>
+    </RollbarContext>,
     document.querySelector('#chat'),
   );
 };

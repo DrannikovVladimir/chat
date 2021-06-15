@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Navbar } from 'react-bootstrap';
+import { Button, Navbar, Container } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 
 import { useUser } from '../hooks/index.jsx';
@@ -12,8 +12,10 @@ const NavBar = () => {
 
   return (
     <Navbar bg="light" expand="lg" className="mb-3">
-      <Navbar.Brand href="/">{t('navbar.title')}</Navbar.Brand>
-      {user && <Button onClick={buttonLogoutHandler} type="button">{t('navbar.logout')}</Button>}
+      <Container>
+        <Navbar.Brand href="/">{t('navbar.title')}</Navbar.Brand>
+        {user && <Button onClick={buttonLogoutHandler} type="button">{t('navbar.logout')}</Button>}
+      </Container>
     </Navbar>
   );
 };
