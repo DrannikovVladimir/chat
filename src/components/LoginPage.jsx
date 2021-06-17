@@ -61,6 +61,7 @@ const LoginPage = () => {
                 value={formik.values.username}
                 ref={inputRef}
                 isInvalid={userFailed}
+                disabled={formik.isSubmitting}
               />
             </Form.Group>
             <Form.Group>
@@ -74,10 +75,17 @@ const LoginPage = () => {
                 onChange={formik.handleChange}
                 value={formik.values.password}
                 isInvalid={userFailed}
+                disabled={formik.isSubmitting}
               />
               <Form.Control.Feedback type="invalid">{t('loginForm.error')}</Form.Control.Feedback>
             </Form.Group>
-            <Button type="submit" className="w-100 mb-3 btn outline-primary">Войти</Button>
+            <Button
+              type="submit"
+              className="w-100 mb-3 btn outline-primary"
+              disabled={formik.isSubmitting}
+            >
+              Войти
+            </Button>
             <Container className="d-flex flex-column align-items-center">
               <span className="small mb-2">{t('loginForm.noAccount')}</span>
               <Link to="/signup">{t('loginForm.registration')}</Link>
