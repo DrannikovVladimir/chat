@@ -5,9 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 import { setChannel } from '../slices/channelsSlice.js';
 import { openModal } from '../slices/modalsSlice.js';
-import ModalNewChannel from './modals/ModalNewChannel.jsx';
-import ModalRemoveChannel from './modals/ModalRemoveChannel.jsx';
-import ModalRenameChannel from './modals/ModalRenameChannel.jsx';
+import { Modals, Types } from './modals/Modals.jsx';
 
 const Channels = () => {
   const { t } = useTranslation();
@@ -80,9 +78,7 @@ const Channels = () => {
             </li>
           ))}
         </ul>
-        {modalType === 'newChannel' && <ModalNewChannel />}
-        {modalType === 'removeChannel' && <ModalRemoveChannel />}
-        {modalType === 'renameChannel' && <ModalRenameChannel />}
+        {modalType === Types[modalType] && Modals[modalType]}
       </>
     );
   };
