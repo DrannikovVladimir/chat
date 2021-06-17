@@ -76,13 +76,13 @@ const ModalNewChannel = () => {
               variant="secondary"
               onClick={modalCloseHandler}
             >
-              {t('channels.buttonCancel')}
+              {t('modals.buttonCancel')}
             </Button>
             <Button
               type="submit"
               disabled={formik.isSubmitting}
             >
-              {t('channels.newChannel.button')}
+              {t('modals.newChannel.button')}
             </Button>
           </div>
         </Form>
