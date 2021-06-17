@@ -10,9 +10,15 @@ export const modalsSlice = createSlice({
   reducers: {
     openModal: (state, { payload }) => {
       const { type, channelId } = payload;
-      return { isOpened: true, type, channelId };
+      state.isOpened = true;
+      state.type = type;
+      state.channelId = channelId;
     },
-    closeModal: () => ({ isOpened: false, type: null, channelId: null }),
+    closeModal: (state) => {
+      state.isOpened = false;
+      state.type = null;
+      state.channelId = null;
+    },
   },
 });
 

@@ -9,19 +9,17 @@ export const messagesSlice = createSlice({
   reducers: {
     addMessage: (state, { payload }) => {
       const { message } = payload;
-      const messages = [...state.messages, message];
-      return { messages };
+      state.messages = [...state.messages, message];
     },
   },
   extraReducers: {
     [setInitialState]: (state, { payload }) => {
       const { messages } = payload;
-      return { messages };
+      state.messages = messages;
     },
     [removeChannel]: (state, { payload }) => {
       const { id } = payload;
-      const messages = state.messages.filter(({ channelId }) => channelId !== id);
-      return { messages };
+      state.messages = state.messages.filter(({ channelId }) => channelId !== id);
     },
   },
 });
