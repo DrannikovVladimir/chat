@@ -9,7 +9,7 @@ export const messagesSlice = createSlice({
   reducers: {
     addMessage: (state, { payload }) => {
       const { message } = payload;
-      state.messages = [...state.messages, message];
+      state.messages.push(message);
     },
   },
   extraReducers: {
