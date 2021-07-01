@@ -5,6 +5,7 @@ import { setInitialState } from '../slices/channelsSlice.js';
 import Channels from './Channels.jsx';
 import Messages from './Messages.jsx';
 import FormMessage from './FormMessage.jsx';
+import ChannelsList from './ChannelsList.jsx';
 
 const getAuthHeader = () => {
   const user = JSON.parse(localStorage.getItem('user'));
@@ -30,7 +31,9 @@ const ChatPage = () => {
 
   return (
     <div className="row pb-5 flex-grow-1 h-75 pb-3">
-      <Channels />
+      <Channels>
+        <ChannelsList />
+      </Channels>
       <Messages>
         <FormMessage />
       </Messages>
