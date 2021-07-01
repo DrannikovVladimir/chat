@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import { Provider } from 'react-redux';
 import i18n from 'i18next';
@@ -16,9 +17,9 @@ const SocketProvider = ({ children, socket }) => (
   </SocketContext.Provider>
 );
 
-const Init = async (socket) => {
+const Init = (socket) => {
   const i18nInstance = i18n.createInstance();
-  await i18nInstance.init({
+  i18nInstance.init({
     lng: 'ru',
     resources,
   });

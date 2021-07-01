@@ -15,6 +15,4 @@ if (process.env.NODE_ENV !== 'production') {
 
 const socket = io();
 
-init(socket).then((vdom) => {
-  render(vdom, document.querySelector('#chat'));
-});
+render(init(socket), document.querySelector('#chat'));
