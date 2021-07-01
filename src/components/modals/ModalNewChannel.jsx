@@ -14,7 +14,7 @@ const ModalNewChannel = () => {
   const socket = useSocket();
   const dispatch = useDispatch();
   const inputRef = useRef();
-  const { isOpened, type } = useSelector(modalsSelector);
+  const { type } = useSelector(modalsSelector);
   const { user: { username } } = useUser();
   const { channels } = useSelector(channelsSelector);
   const channelsName = channels.map(({ name }) => name);
@@ -51,7 +51,7 @@ const ModalNewChannel = () => {
   };
 
   return (
-    <Modal show={isOpened && type === 'newChannel'} onHide={modalCloseHandler}>
+    <Modal show={type !== null && type === 'newChannel'} onHide={modalCloseHandler}>
       <Modal.Header closeButton>
         <Modal.Title>{t('modals.newChannel.title')}</Modal.Title>
       </Modal.Header>

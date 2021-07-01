@@ -10,7 +10,7 @@ const ModalRemoveChannel = () => {
   const { t } = useTranslation();
   const socket = useSocket();
   const dispatch = useDispatch();
-  const { isOpened, type, channelId } = useSelector(modalsSelector);
+  const { type, channelId } = useSelector(modalsSelector);
 
   const closeModalHandler = () => {
     dispatch(closeModal());
@@ -27,7 +27,7 @@ const ModalRemoveChannel = () => {
   };
 
   return (
-    <Modal show={isOpened && type === 'removeChannel'} onHide={closeModalHandler}>
+    <Modal show={type !== null && type === 'removeChannel'} onHide={closeModalHandler}>
       <Modal.Header closeButton>
         <Modal.Title>{t('modals.removeChannel.title')}</Modal.Title>
       </Modal.Header>

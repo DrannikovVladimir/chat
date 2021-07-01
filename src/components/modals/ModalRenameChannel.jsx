@@ -14,7 +14,7 @@ const ModalRenameChannel = () => {
   const socket = useSocket();
   const dispatch = useDispatch();
   const inputRef = useRef();
-  const { isOpened, type, channelId } = useSelector(modalsSelector);
+  const { type, channelId } = useSelector(modalsSelector);
   const { channels } = useSelector(channelsSelector);
   const channelsName = channels.map(({ name }) => name);
   const currentChannelName = channels.find((ch) => ch.id === channelId.id);
@@ -52,7 +52,7 @@ const ModalRenameChannel = () => {
   };
 
   return (
-    <Modal show={isOpened && type === 'renameChannel'} onHide={closeModalHandler}>
+    <Modal show={type !== null && type === 'renameChannel'} onHide={closeModalHandler}>
       <Modal.Header closeButton>
         <Modal.Title>{t('modals.renameChannel.title')}</Modal.Title>
       </Modal.Header>
