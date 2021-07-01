@@ -5,16 +5,17 @@ import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 
-import { closeModal } from '../../slices/modalsSlice.js';
 import { useSocket } from '../../hooks/index.jsx';
+import { closeModal, modalsSelector } from '../../slices/modalsSlice.js';
+import { channelsSelector } from '../../slices/channelsSlice.js';
 
 const ModalRenameChannel = () => {
   const { t } = useTranslation();
   const socket = useSocket();
   const dispatch = useDispatch();
   const inputRef = useRef();
-  const { isOpened, type, channelId } = useSelector((state) => state.modals);
-  const { channels } = useSelector((state) => state.channels);
+  const { isOpened, type, channelId } = useSelector(modalsSelector);
+  const { channels } = useSelector(channelsSelector);
   const channelsName = channels.map(({ name }) => name);
   const currentChannelName = channels.find((ch) => ch.id === channelId.id);
   const formik = useFormik({

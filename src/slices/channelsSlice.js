@@ -42,4 +42,6 @@ export const {
   renameChannel,
 } = channelsSlice.actions;
 
+export const channelsSelector = (state) => state.channels;
+
 export default channelsSlice.reducer;

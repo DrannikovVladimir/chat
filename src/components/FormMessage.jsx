@@ -4,10 +4,11 @@ import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 
 import { useSocket, useUser } from '../hooks/index.jsx';
+import { messagesSelector } from '../slices/messagesSlice.js';
 
 const FormMessage = () => {
   const { t } = useTranslation();
-  const currentChannelId = useSelector((state) => state.channels.currentChannelId);
+  const { currentChannelId } = useSelector(messagesSelector);
   const socket = useSocket();
   const { user: { username } } = useUser();
   const formik = useFormik({

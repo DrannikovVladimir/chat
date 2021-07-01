@@ -1,9 +1,12 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
+import { messagesSelector } from '../slices/messagesSlice.js';
+import { channelsSelector } from '../slices/channelsSlice.js';
+
 const Messages = ({ children }) => {
-  const { messages } = useSelector((state) => state.messages);
-  const { currentChannelId } = useSelector((state) => state.channels);
+  const { messages } = useSelector(messagesSelector);
+  const { currentChannelId } = useSelector(channelsSelector);
 
   const renderMessages = (items) => {
     if (items.length === 0) {
