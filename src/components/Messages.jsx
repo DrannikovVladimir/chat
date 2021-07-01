@@ -6,9 +6,7 @@ import { channelsSelector } from '../slices/channelsSlice.js';
 
 const Messages = ({ children }) => {
   const { messages } = useSelector(messagesSelector);
-  console.log(messages);
   const { currentChannelId } = useSelector(channelsSelector);
-  console.log(currentChannelId);
 
   const renderMessages = (items) => {
     if (items.length === 0) {

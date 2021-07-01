@@ -48,31 +48,28 @@ const ChatRoute = ({ children, path }) => {
   );
 };
 
-const App = () => {
-  console.log('App');
-  return (
-    <UserProvider>
-      <div className="d-flex flex-column h-100">
-        <NavBar />
-        <Router>
-          <Switch>
-            <ChatRoute exact path="/">
-              <ChatPage />
-            </ChatRoute>
-            <Route path="/login">
-              <LoginPage />
-            </Route>
-            <Route path="/signup">
-              <SignUpPage />
-            </Route>
-            <Route>
-              <NotFoundPage />
-            </Route>
-          </Switch>
-        </Router>
-      </div>
-    </UserProvider>
-  );
-};
+const App = () => (
+  <UserProvider>
+    <div className="d-flex flex-column h-100">
+      <NavBar />
+      <Router>
+        <Switch>
+          <ChatRoute exact path="/">
+            <ChatPage />
+          </ChatRoute>
+          <Route path="/login">
+            <LoginPage />
+          </Route>
+          <Route path="/signup">
+            <SignUpPage />
+          </Route>
+          <Route>
+            <NotFoundPage />
+          </Route>
+        </Switch>
+      </Router>
+    </div>
+  </UserProvider>
+);
 
 export default App;
