@@ -17,8 +17,8 @@ const SocketProvider = ({ children, socket }) => (
   </SocketContext.Provider>
 );
 
-const Init = (socket) => {
-  const i18nInstance = i18n.createInstance();
+const Init = async (socket) => {
+  const i18nInstance = await i18n.createInstance();
   i18nInstance.init({
     lng: 'ru',
     resources,
