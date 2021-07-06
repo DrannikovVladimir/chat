@@ -77,7 +77,7 @@ const LoginPage = () => {
                 isInvalid={userFailed}
                 disabled={formik.isSubmitting}
               />
-              <Form.Control.Feedback type="invalid">{t('loginForm.error')}</Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">{userFailed && t('loginForm.error')}</Form.Control.Feedback>
             </Form.Group>
             <Button
               type="submit"
