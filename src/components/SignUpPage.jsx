@@ -65,7 +65,7 @@ const SignUpPage = () => {
         <Col sm="4">
           <Form className="pt-3" onSubmit={formik.handleSubmit}>
             <Form.Group>
-              <Form.Label htmlFor="username">{t('registrationForm.username')}</Form.Label>
+              <Form.Label htmlFor="username">{t('loginForm.username')}</Form.Label>
               <Form.Control
                 type="text"
                 name="username"
