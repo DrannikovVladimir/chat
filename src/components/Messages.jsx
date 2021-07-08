@@ -20,8 +20,8 @@ const Messages = ({ children }) => {
           .map(({ id, text, user }) => (
             <div key={id} className="text-break">
               <b>{user}</b>
-              :
-              {` ${text}`}
+              {': '}
+              {`${text}`}
             </div>
           ))}
       </div>
