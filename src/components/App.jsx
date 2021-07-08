@@ -17,19 +17,33 @@ import NotFoundPage from './NotFoundPage.jsx';
 const UserProvider = ({ children }) => {
   const { localStorage } = window;
   const userData = JSON.parse(localStorage.getItem('user'));
-  const currentUser = userData ? { username: userData.username } : null;
+  const currentUser = userData ?? null;
+
   const [user, setUser] = useState(currentUser);
   const logIn = ({ username, token }) => {
     localStorage.setItem('user', JSON.stringify({ username, token }));
-    setUser({ username });
+    setUser({ username, token });
   };
   const logOut = () => {
     localStorage.removeItem('user');
     setUser(null);
   };
+  const isAuthorized = () => {
+    if (!user) {
+      return false;
+    }
+    const { username, token } = user;
+    return !!username && !!token;
+  };
 
   return (
-    <UserContext.Provider value={{ user, logIn, logOut }}>
+    <UserContext.Provider value={{
+      user,
+      logIn,
+      logOut,
+      isAuthorized,
+    }}
+    >
       {children}
     </UserContext.Provider>
   );
@@ -41,7 +55,7 @@ const ChatRoute = ({ children, path }) => {
   return (
     <Route
       path={path}
-      render={({ location }) => (auth.user
+      render={({ location }) => (auth.isAuthorized()
         ? children
         : <Redirect to={{ pathname: '/login', state: { from: location } }} />)}
     />

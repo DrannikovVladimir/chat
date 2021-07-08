@@ -29,6 +29,7 @@ const LoginPage = () => {
       setUserFailed(false);
       try {
         const { data } = await axios.post('/api/v1/login', values);
+        console.log(data);
         user.logIn(data);
         const { from } = location.state || { from: { pathname: '/' } };
         history.replace(from);
