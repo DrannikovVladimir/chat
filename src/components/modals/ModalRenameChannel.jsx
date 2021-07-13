@@ -43,7 +43,6 @@ const ModalRenameChannel = () => {
   });
 
   useEffect(() => {
-    inputRef.current.focus();
     inputRef.current.select();
   }, []);
 

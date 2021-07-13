@@ -34,11 +34,11 @@ const ModalNewChannel = () => {
       socket.emit('newChannel', channel, (res) => {
         if (res.status === 'ok') {
           dispatch(closeModal());
-          actions.resetForm();
         } else {
           throw new Error(`${t('errors.network')}`);
         }
       });
+      actions.resetForm();
     },
   });
 

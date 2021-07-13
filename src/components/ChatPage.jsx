@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
+
+import { useUser } from '../hooks/index.jsx';
 import { setInitialState } from '../slices/channelsSlice.js';
 import Channels from './Channels.jsx';
 import Messages from './Messages.jsx';
@@ -19,11 +21,18 @@ const getAuthHeader = () => {
 
 const ChatPage = () => {
   const dispatch = useDispatch();
+  const auth = useUser();
 
   useEffect(() => {
     const fetchContent = async () => {
-      const { data } = await axios.get('/api/v1/data', { headers: getAuthHeader() });
-      dispatch(setInitialState(data));
+      try {
+        const { data } = await axios.get('/api/v1/data', { headers: getAuthHeader() });
+        dispatch(setInitialState(data));
+      } catch (err) {
+        if (err.response.status === 401) {
+          auth.logOut();
+        }
+      }
     };
 
     fetchContent();
