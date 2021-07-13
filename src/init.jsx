@@ -2,7 +2,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import i18n from 'i18next';
-import { I18nextProvider } from 'react-i18next';
+import { I18nextProvider, initReactI18next } from 'react-i18next';
 
 import store from './app/store.js';
 import resources from './locales/locales.js';
@@ -18,11 +18,12 @@ const SocketProvider = ({ children, socket }) => (
 );
 
 const Init = async (socket) => {
-  const i18nInstance = await i18n.createInstance();
-  i18nInstance.init({
-    lng: 'ru',
-    resources,
-  });
+  i18n
+    .use(initReactI18next)
+    .init({
+      lng: 'ru',
+      resources,
+    });
 
   socket.on('newMessage', (message) => store.dispatch(addMessage({ message })));
   socket.on('newChannel', (channel) => store.dispatch(newChannel({ channel })));
@@ -33,7 +34,7 @@ const Init = async (socket) => {
     <Provider store={store}>
       <RollbarContext.Provider value={rollbar}>
         <SocketProvider socket={socket}>
-          <I18nextProvider i18n={i18nInstance}>
+          <I18nextProvider i18n={i18n}>
             <App />
           </I18nextProvider>
         </SocketProvider>
