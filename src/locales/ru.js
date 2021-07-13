@@ -27,7 +27,7 @@ export default {
       error: 'Неверные имя пользователя или пароль',
     },
     registrationForm: {
-      username: 'Ваш ник',
+      username: 'Имя пользователя',
       usernamePlaceholder: 'От 3 до 20 сиволов',
       password: 'Пароль',
       passwordPlaceholder: 'Не менее 6 символов',
