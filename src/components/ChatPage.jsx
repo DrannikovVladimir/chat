@@ -9,28 +9,25 @@ import Messages from './Messages.jsx';
 import FormMessage from './FormMessage.jsx';
 import ChannelsList from './ChannelsList.jsx';
 
-// const getAuthHeader = () => {
-//   const { localStorage } = window;
-//   const user = JSON.parse(localStorage.getItem('user'));
+const getAuthHeader = () => {
+  const { localStorage } = window;
+  const user = JSON.parse(localStorage.getItem('user'));
 
-//   if (user && user.token) {
-//     return { Authorization: `Bearer ${user.token}` };
-//   }
+  if (user && user.token) {
+    return { Authorization: `Bearer ${user.token}` };
+  }
 
-//   return {};
-// };
+  return {};
+};
 
 const ChatPage = () => {
   const dispatch = useDispatch();
   const auth = useUser();
 
   useEffect(() => {
-    const fetchContent = async (token) => {
+    const fetchContent = async () => {
       try {
-        const { data } = await axios.get('/api/v1/data', {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-
+        const { data } = await axios.get('/api/v1/data', { headers: getAuthHeader() });
         dispatch(setInitialState(data));
       } catch (err) {
         if (err.response.status === 401) {
@@ -39,7 +36,7 @@ const ChatPage = () => {
       }
     };
 
-    fetchContent(auth.user.token);
+    fetchContent();
   }, [dispatch]);
 
   return (

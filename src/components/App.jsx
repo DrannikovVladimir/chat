@@ -16,7 +16,6 @@ import NotFoundPage from './NotFoundPage.jsx';
 
 const UserProvider = ({ children }) => {
   const { localStorage } = window;
-  // localStorage.removeItem('user');
   const userData = JSON.parse(localStorage.getItem('user'));
   const currentUser = userData ?? null;
 

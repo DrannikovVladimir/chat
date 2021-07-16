@@ -8,13 +8,11 @@ const NavBar = () => {
   const { t } = useTranslation();
   const { user, logOut } = useUser();
 
-  const buttonLogoutHandler = () => logOut();
-
   return (
     <Navbar bg="light" expand="lg" className="mb-3">
       <Container>
         <Navbar.Brand href="/">{t('navbar.title')}</Navbar.Brand>
-        {user && <Button onClick={buttonLogoutHandler} type="button">{t('navbar.logout')}</Button>}
+        {user && <Button onClick={logOut} type="button">{t('navbar.logout')}</Button>}
       </Container>
     </Navbar>
   );
