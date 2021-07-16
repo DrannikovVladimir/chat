@@ -74,7 +74,7 @@ const SignUpPage = () => {
                 autoComplete="username"
                 onChange={formik.handleChange}
                 value={formik.values.username}
-                isInvalid={formik.touched.username && formik.errors.username}
+                isInvalid={formik.errors.username}
                 ref={userRef}
               />
               <Form.Control.Feedback type="invalid">{formik.errors.username}</Form.Control.Feedback>
@@ -89,7 +89,7 @@ const SignUpPage = () => {
                 autoComplete="new-password"
                 onChange={formik.handleChange}
                 value={formik.values.password}
-                isInvalid={formik.touched.password && formik.errors.password}
+                isInvalid={formik.errors.password}
               />
               <Form.Control.Feedback type="invalid">{formik.errors.password}</Form.Control.Feedback>
             </Form.Group>
@@ -103,8 +103,7 @@ const SignUpPage = () => {
                 autoComplete="new-password"
                 onChange={formik.handleChange}
                 value={formik.values.passwordConfirmation}
-                isInvalid={formik.touched.passwordConfirmation
-                  && formik.errors.passwordConfirmation}
+                isInvalid={formik.errors.passwordConfirmation}
               />
               <Form.Control.Feedback type="invalid">{formik.errors.passwordConfirmation}</Form.Control.Feedback>
             </Form.Group>
