@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { useFormik } from 'formik';
 import {
   Button,
@@ -19,21 +19,20 @@ const LoginPage = () => {
   const location = useLocation();
   const history = useHistory();
   const inputRef = useRef();
-  const [userFailed, setUserFailed] = useState(false);
   const formik = useFormik({
     initialValues: {
       username: '',
       password: '',
     },
-    onSubmit: async (values) => {
-      setUserFailed(false);
+    onSubmit: async (values, actions) => {
+      actions.setStatus(false);
       try {
         const { data } = await axios.post('/api/v1/login', values);
         user.logIn(data);
         const { from } = location.state || { from: { pathname: '/' } };
         history.replace(from);
       } catch (err) {
-        setUserFailed(true);
+        actions.setStatus(true);
         inputRef.current.local();
         throw err;
       }
@@ -60,7 +59,7 @@ const LoginPage = () => {
                 onChange={formik.handleChange}
                 value={formik.values.username}
                 ref={inputRef}
-                isInvalid={userFailed}
+                isInvalid={formik.status}
                 disabled={formik.isSubmitting}
               />
             </Form.Group>
@@ -74,10 +73,10 @@ const LoginPage = () => {
                 required
                 onChange={formik.handleChange}
                 value={formik.values.password}
-                isInvalid={userFailed}
+                isInvalid={formik.status}
                 disabled={formik.isSubmitting}
               />
-              <Form.Control.Feedback type="invalid">{userFailed && t('loginForm.error')}</Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">{formik.status && t('loginForm.error')}</Form.Control.Feedback>
             </Form.Group>
             <Button
               type="submit"
