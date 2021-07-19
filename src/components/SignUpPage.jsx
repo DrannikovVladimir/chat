@@ -41,7 +41,7 @@ const SignUpPage = () => {
         const response = await axios.post('/api/v1/signup', values);
         const { data } = response;
         user.logIn(data);
-        history.replace('/');
+        history.replace('/login');
         actions.resetForm();
       } catch (err) {
         if (err.response.status === 409) {
