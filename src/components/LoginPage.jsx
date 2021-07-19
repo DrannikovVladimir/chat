@@ -32,8 +32,11 @@ const LoginPage = () => {
         const { from } = location.state || { from: { pathname: '/' } };
         history.replace(from);
       } catch (err) {
-        actions.setStatus(true);
-        inputRef.current.local();
+        if (err.response.status === 401) {
+          actions.setStatus(true);
+          inputRef.current.local();
+          return;
+        }
         throw err;
       }
     },

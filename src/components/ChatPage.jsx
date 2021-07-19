@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 
-import { useUser } from '../hooks/index.jsx';
+import { useUser, useSocket } from '../hooks/index.jsx';
 import { setInitialState } from '../slices/channelsSlice.js';
 import Channels from './Channels.jsx';
 import Messages from './Messages.jsx';
@@ -23,21 +23,27 @@ const getAuthHeader = () => {
 const ChatPage = () => {
   const dispatch = useDispatch();
   const auth = useUser();
+  const socket = useSocket();
+  const { token } = JSON.parse(localStorage.getItem('user'));
 
   useEffect(() => {
     const fetchContent = async () => {
       try {
         const { data } = await axios.get('/api/v1/data', { headers: getAuthHeader() });
         dispatch(setInitialState(data));
+        socket.auth = { token };
       } catch (err) {
         if (err.response.status === 401) {
           auth.logOut();
+          return;
         }
+
+        throw new Error(err);
       }
     };
 
     fetchContent();
-  }, [dispatch]);
+  }, []);
 
   return (
     <div className="row pb-5 flex-grow-1 h-75 pb-3">
