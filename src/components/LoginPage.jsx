@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useCallback } from 'react';
 import { useFormik } from 'formik';
 import {
   Button,
@@ -42,9 +42,19 @@ const LoginPage = () => {
     },
   });
 
+  const redirectAuthorized = useCallback(
+    () => {
+      if (user.isAuthorized()) {
+        history.replace('/');
+      }
+    },
+    [user.isAuthorized(), history],
+  );
+
   useEffect(() => {
+    redirectAuthorized();
     inputRef.current.focus();
-  }, []);
+  }, [redirectAuthorized]);
 
   return (
     <Container fluid>
