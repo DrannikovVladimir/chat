@@ -15,35 +15,50 @@ import NavBar from './NavBar.jsx';
 import NotFoundPage from './NotFoundPage.jsx';
 
 const UserProvider = ({ children }) => {
-  const userToken = localStorage.getItem('token');
+  const { localStorage } = window;
+  const userData = JSON.parse(localStorage.getItem('user'));
+  const currentUser = userData ?? null;
 
-  const [loggedIn, setLoggedIn] = useState(!!userToken);
-
-  const logIn = ({ token, username }) => {
-    localStorage.setItem('token', token);
-    localStorage.setItem('username', username);
-    setLoggedIn(true);
+  const [user, setUser] = useState(currentUser);
+  const logIn = ({ username, token }) => {
+    localStorage.setItem('user', JSON.stringify({ username, token }));
+    setUser({ username, token });
   };
   const logOut = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('username');
-    setLoggedIn(false);
+    localStorage.removeItem('user');
+    setUser(null);
+  };
+  const isAuthorized = () => {
+    if (!user) {
+      return false;
+    }
+    const { username, token } = user;
+    return !!username && !!token;
   };
 
   return (
-    <UserContext.Provider value={{ loggedIn, logIn, logOut }}>
+    <UserContext.Provider value={{
+      user,
+      logIn,
+      logOut,
+      isAuthorized,
+    }}
+    >
       {children}
     </UserContext.Provider>
   );
 };
 
-const ChatRoute = ({ children, path, exact }) => {
+const ChatRoute = ({ children, path }) => {
   const auth = useUser();
 
   return (
-    <Route exact={exact} path={path}>
-      {auth.loggedIn ? children : <Redirect to="/login" />}
-    </Route>
+    <Route
+      path={path}
+      render={({ location }) => (auth.isAuthorized()
+        ? children
+        : <Redirect to={{ pathname: '/login', state: { from: location } }} />)}
+    />
   );
 };
 
@@ -62,7 +77,7 @@ const App = () => (
           <Route path="/signup">
             <SignUpPage />
           </Route>
-          <Route path="*">
+          <Route>
             <NotFoundPage />
           </Route>
         </Switch>

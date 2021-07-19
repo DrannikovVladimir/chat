@@ -15,7 +15,7 @@ const ModalNewChannel = () => {
   const dispatch = useDispatch();
   const inputRef = useRef();
   const { type } = useSelector(modalsSelector);
-  const username = localStorage.getItem('username');
+  const { user: { username } } = useUser();
   const { channels } = useSelector(channelsSelector);
   const channelsName = channels.map(({ name }) => name);
   const formik = useFormik({

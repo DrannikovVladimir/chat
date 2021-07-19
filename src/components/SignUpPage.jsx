@@ -41,8 +41,8 @@ const SignUpPage = () => {
         const response = await axios.post('/api/v1/signup', values);
         const { data } = response;
         user.logIn(data);
+        history.replace('/');
         actions.resetForm();
-        history.push('/');
       } catch (err) {
         if (err.response.status === 409) {
           actions.setFieldError('passwordConfirmation', `${t('registrationForm.error')}`);

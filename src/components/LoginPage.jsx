@@ -8,7 +8,7 @@ import {
   Col,
 } from 'react-bootstrap';
 import axios from 'axios';
-import { useHistory, Link } from 'react-router-dom';
+import { useLocation, useHistory, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import { useUser } from '../hooks/index.jsx';
@@ -16,6 +16,7 @@ import { useUser } from '../hooks/index.jsx';
 const LoginPage = () => {
   const { t } = useTranslation();
   const user = useUser();
+  const location = useLocation();
   const history = useHistory();
   const inputRef = useRef();
   const formik = useFormik({
@@ -28,11 +29,12 @@ const LoginPage = () => {
       try {
         const { data } = await axios.post('/api/v1/login', values);
         user.logIn(data);
-        history.push('/');
+        const { from } = location.state || { from: { pathname: '/' } };
+        history.replace(from);
       } catch (err) {
         if (err.response.status === 401) {
           actions.setStatus(true);
-          inputRef.current.local();
+          inputRef.current.select();
           return;
         }
         throw err;
