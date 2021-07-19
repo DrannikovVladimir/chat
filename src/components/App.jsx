@@ -49,16 +49,13 @@ const UserProvider = ({ children }) => {
   );
 };
 
-const ChatRoute = ({ children, path }) => {
+const ChatRoute = ({ children, path, exact }) => {
   const auth = useUser();
 
   return (
-    <Route
-      path={path}
-      render={({ location }) => (auth.isAuthorized()
-        ? children
-        : <Redirect to={{ pathname: '/login', state: { from: location } }} />)}
-    />
+    <Route exact={exact} path={path}>
+      {auth.isAuthorized() ? children : <Redirect to="/login" />}
+    </Route>
   );
 };
 
@@ -77,7 +74,7 @@ const App = () => (
           <Route path="/signup">
             <SignUpPage />
           </Route>
-          <Route>
+          <Route path="*">
             <NotFoundPage />
           </Route>
         </Switch>

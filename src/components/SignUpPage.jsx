@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useCallback } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Form,
@@ -41,7 +41,7 @@ const SignUpPage = () => {
         const response = await axios.post('/api/v1/signup', values);
         const { data } = response;
         user.logIn(data);
-        history.replace('/');
+        history.push('/');
         actions.resetForm();
       } catch (err) {
         if (err.response.status === 409) {
@@ -55,19 +55,9 @@ const SignUpPage = () => {
     },
   });
 
-  const redirectAuthorized = useCallback(
-    () => {
-      if (user.isAuthorized()) {
-        history.replace('/');
-      }
-    },
-    [user.isAuthorized(), history],
-  );
-
   useEffect(() => {
-    redirectAuthorized();
     userRef.current.focus();
-  }, [redirectAuthorized]);
+  }, []);
 
   return (
     <Container fluid>
