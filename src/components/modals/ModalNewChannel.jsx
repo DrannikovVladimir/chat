@@ -1,18 +1,17 @@
 import React, { useRef, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Modal, Form, Button } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 
 import { useSocket, useUser } from '../../hooks/index.jsx';
-import { closeModal, modalsSelector } from '../../slices/modalsSlice.js';
+import { modalsSelector } from '../../slices/modalsSlice.js';
 import { channelsSelector } from '../../slices/channelsSlice.js';
 
-const ModalNewChannel = () => {
+const ModalNewChannel = ({ onHide }) => {
   const { t } = useTranslation();
   const socket = useSocket();
-  const dispatch = useDispatch();
   const inputRef = useRef();
   const { type } = useSelector(modalsSelector);
   const { user: { username } } = useUser();
@@ -33,7 +32,7 @@ const ModalNewChannel = () => {
       const channel = { user: username, name: values.name };
       socket.emit('newChannel', channel, (res) => {
         if (res.status === 'ok') {
-          dispatch(closeModal());
+          onHide();
         } else {
           throw new Error(`${t('errors.network')}`);
         }
@@ -46,12 +45,8 @@ const ModalNewChannel = () => {
     inputRef.current.focus();
   }, []);
 
-  const modalCloseHandler = () => {
-    dispatch(closeModal());
-  };
-
   return (
-    <Modal show={type !== null && type === 'newChannel'} onHide={modalCloseHandler}>
+    <Modal show={type !== null && type === 'newChannel'} onHide={onHide}>
       <Modal.Header closeButton>
         <Modal.Title>{t('modals.newChannel.title')}</Modal.Title>
       </Modal.Header>
@@ -75,7 +70,7 @@ const ModalNewChannel = () => {
               type="button"
               className="mr-2"
               variant="secondary"
-              onClick={modalCloseHandler}
+              onClick={onHide}
             >
               {t('modals.buttonCancel')}
             </Button>

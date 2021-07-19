@@ -5,7 +5,10 @@ import {
   Route,
   Redirect,
 } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { closeModal, modalsSelector } from '../slices/modalsSlice.js';
+import getModal from './modals/Modals.jsx';
 import { UserContext } from '../contexts/index.jsx';
 import { useUser } from '../hooks/index.jsx';
 import ChatPage from './ChatPage.jsx';
@@ -13,6 +16,14 @@ import LoginPage from './LoginPage.jsx';
 import SignUpPage from './SignUpPage.jsx';
 import NavBar from './NavBar.jsx';
 import NotFoundPage from './NotFoundPage.jsx';
+
+const renderModal = (type, onHide) => {
+  if (!type) {
+    return null;
+  }
+  const Component = getModal(type);
+  return <Component onHide={onHide} />;
+};
 
 const UserProvider = ({ children }) => {
   const { localStorage } = window;
@@ -62,28 +73,37 @@ const ChatRoute = ({ children, path }) => {
   );
 };
 
-const App = () => (
-  <UserProvider>
-    <div className="d-flex flex-column h-100">
-      <NavBar />
+const App = () => {
+  const dispatch = useDispatch();
+  const { type } = useSelector(modalsSelector);
+  const onHide = () => {
+    dispatch(closeModal());
+  };
+
+  return (
+    <UserProvider>
       <Router>
-        <Switch>
-          <ChatRoute exact path="/">
-            <ChatPage />
-          </ChatRoute>
-          <Route path="/login">
-            <LoginPage />
-          </Route>
-          <Route path="/signup">
-            <SignUpPage />
-          </Route>
-          <Route>
-            <NotFoundPage />
-          </Route>
-        </Switch>
+        <div className="d-flex flex-column h-100">
+          <NavBar />
+          <Switch>
+            <ChatRoute exact path="/">
+              <ChatPage />
+            </ChatRoute>
+            <Route path="/login">
+              <LoginPage />
+            </Route>
+            <Route path="/signup">
+              <SignUpPage />
+            </Route>
+            <Route>
+              <NotFoundPage />
+            </Route>
+          </Switch>
+        </div>
+        {renderModal(type, onHide)}
       </Router>
-    </div>
-  </UserProvider>
-);
+    </UserProvider>
+  );
+};
 
 export default App;

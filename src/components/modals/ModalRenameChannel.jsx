@@ -1,18 +1,17 @@
 import React, { useRef, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Modal, Form, Button } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 
 import { useSocket } from '../../hooks/index.jsx';
-import { closeModal, modalsSelector } from '../../slices/modalsSlice.js';
+import { modalsSelector } from '../../slices/modalsSlice.js';
 import { channelsSelector } from '../../slices/channelsSlice.js';
 
-const ModalRenameChannel = () => {
+const ModalRenameChannel = ({ onHide }) => {
   const { t } = useTranslation();
   const socket = useSocket();
-  const dispatch = useDispatch();
   const inputRef = useRef();
   const { type, channelId } = useSelector(modalsSelector);
   const { channels } = useSelector(channelsSelector);
@@ -33,7 +32,7 @@ const ModalRenameChannel = () => {
       const channel = { name: values.name, id: channelId.id };
       socket.emit('renameChannel', channel, (res) => {
         if (res.status === 'ok') {
-          dispatch(closeModal());
+          onHide();
         } else {
           throw new Error(`${t('errors.network')}`);
         }
@@ -46,12 +45,8 @@ const ModalRenameChannel = () => {
     inputRef.current.select();
   }, []);
 
-  const closeModalHandler = () => {
-    dispatch(closeModal());
-  };
-
   return (
-    <Modal show={type !== null && type === 'renameChannel'} onHide={closeModalHandler}>
+    <Modal show={type !== null && type === 'renameChannel'} onHide={onHide}>
       <Modal.Header closeButton>
         <Modal.Title>{t('modals.renameChannel.title')}</Modal.Title>
       </Modal.Header>
@@ -75,7 +70,7 @@ const ModalRenameChannel = () => {
               type="button"
               className="mr-2"
               variant="secondary"
-              onClick={closeModalHandler}
+              onClick={onHide}
             >
               {t('modals.buttonCancel')}
             </Button>

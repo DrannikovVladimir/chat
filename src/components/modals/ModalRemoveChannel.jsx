@@ -1,25 +1,20 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Modal, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 
 import { useSocket } from '../../hooks/index.jsx';
-import { closeModal, modalsSelector } from '../../slices/modalsSlice.js';
+import { modalsSelector } from '../../slices/modalsSlice.js';
 
-const ModalRemoveChannel = () => {
+const ModalRemoveChannel = ({ onHide }) => {
   const { t } = useTranslation();
   const socket = useSocket();
-  const dispatch = useDispatch();
   const { type, channelId } = useSelector(modalsSelector);
-
-  const closeModalHandler = () => {
-    dispatch(closeModal());
-  };
 
   const removeChannelHandler = () => {
     socket.emit('removeChannel', channelId, (res) => {
       if (res.status === 'ok') {
-        closeModalHandler();
+        onHide();
       } else {
         throw new Error(`${t('errors.network')}`);
       }
@@ -27,7 +22,7 @@ const ModalRemoveChannel = () => {
   };
 
   return (
-    <Modal show={type !== null && type === 'removeChannel'} onHide={closeModalHandler}>
+    <Modal show={type !== null && type === 'removeChannel'} onHide={onHide}>
       <Modal.Header closeButton>
         <Modal.Title>{t('modals.removeChannel.title')}</Modal.Title>
       </Modal.Header>
@@ -37,7 +32,7 @@ const ModalRemoveChannel = () => {
           <Button
             type="button"
             variant="secondary"
-            onClick={closeModalHandler}
+            onClick={onHide}
           >
             {t('modals.buttonCancel')}
           </Button>

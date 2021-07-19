@@ -4,13 +4,11 @@ import { Dropdown, Button, ButtonGroup } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 
 import { setChannel, channelsSelector } from '../slices/channelsSlice.js';
-import { openModal, modalsSelector } from '../slices/modalsSlice.js';
-import { Modals, Types } from './modals/Modals.jsx';
+import { openModal } from '../slices/modalsSlice.js';
 
 const ChannelsList = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { type: modalType } = useSelector(modalsSelector);
   const { channels, currentChannelId } = useSelector(channelsSelector);
 
   if (channels.length === 0) {
@@ -78,7 +76,6 @@ const ChannelsList = () => {
           </li>
         ))}
       </ul>
-      {modalType === Types[modalType] && Modals[modalType]}
     </>
   );
 };
