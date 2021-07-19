@@ -10,11 +10,10 @@ import FormMessage from './FormMessage.jsx';
 import ChannelsList from './ChannelsList.jsx';
 
 const getAuthHeader = () => {
-  const { localStorage } = window;
-  const user = JSON.parse(localStorage.getItem('user'));
+  const token = localStorage.getItem('token');
 
-  if (user && user.token) {
-    return { Authorization: `Bearer ${user.token}` };
+  if (token) {
+    return { Authorization: `Bearer ${token}` };
   }
 
   return {};

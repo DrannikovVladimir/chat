@@ -3,14 +3,14 @@ import { useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 
-import { useSocket, useUser } from '../hooks/index.jsx';
+import { useSocket } from '../hooks/index.jsx';
 import { channelsSelector } from '../slices/channelsSlice.js';
 
 const FormMessage = () => {
   const { t } = useTranslation();
   const { currentChannelId } = useSelector(channelsSelector);
   const socket = useSocket();
-  const { user: { username } } = useUser();
+  const username = localStorage.getItem('username');
   const formik = useFormik({
     initialValues: {
       body: '',

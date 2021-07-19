@@ -15,35 +15,23 @@ import NavBar from './NavBar.jsx';
 import NotFoundPage from './NotFoundPage.jsx';
 
 const UserProvider = ({ children }) => {
-  const { localStorage } = window;
-  const userData = JSON.parse(localStorage.getItem('user'));
-  const currentUser = userData ?? null;
+  const userToken = localStorage.getItem('token');
 
-  const [user, setUser] = useState(currentUser);
-  const logIn = ({ username, token }) => {
-    localStorage.setItem('user', JSON.stringify({ username, token }));
-    setUser({ username, token });
+  const [loggedIn, setLoggedIn] = useState(!!userToken);
+
+  const logIn = ({ token, username }) => {
+    localStorage.setItem('token', token);
+    localStorage.setItem('username', username);
+    setLoggedIn(true);
   };
   const logOut = () => {
-    localStorage.removeItem('user');
-    setUser(null);
-  };
-  const isAuthorized = () => {
-    if (!user) {
-      return false;
-    }
-    const { username, token } = user;
-    return !!username && !!token;
+    localStorage.removeItem('token');
+    localStorage.removeItem('username');
+    setLoggedIn(false);
   };
 
   return (
-    <UserContext.Provider value={{
-      user,
-      logIn,
-      logOut,
-      isAuthorized,
-    }}
-    >
+    <UserContext.Provider value={{ loggedIn, logIn, logOut }}>
       {children}
     </UserContext.Provider>
   );
@@ -54,7 +42,7 @@ const ChatRoute = ({ children, path, exact }) => {
 
   return (
     <Route exact={exact} path={path}>
-      {auth.isAuthorized() ? children : <Redirect to="/login" />}
+      {auth.loggedIn ? children : <Redirect to="/login" />}
     </Route>
   );
 };

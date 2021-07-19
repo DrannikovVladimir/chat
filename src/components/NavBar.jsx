@@ -6,13 +6,13 @@ import { useUser } from '../hooks/index.jsx';
 
 const NavBar = () => {
   const { t } = useTranslation();
-  const { user, logOut } = useUser();
+  const { loggedIn, logOut } = useUser();
 
   return (
     <Navbar bg="light" expand="lg" className="mb-3">
       <Container>
         <Navbar.Brand href="/">{t('navbar.title')}</Navbar.Brand>
-        {user && <Button onClick={logOut} type="button">{t('navbar.logout')}</Button>}
+        {loggedIn && <Button onClick={logOut} type="button">{t('navbar.logout')}</Button>}
       </Container>
     </Navbar>
   );
