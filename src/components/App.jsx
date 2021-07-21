@@ -26,26 +26,20 @@ const renderModal = (type, onHide) => {
 };
 
 const UserProvider = ({ children }) => {
-  const { localStorage } = window;
-  // localStorage.removeItem('user');
-  const userData = JSON.parse(localStorage.getItem('user'));
-  const currentUser = userData ?? null;
+  const userToken = localStorage.getItem('token');
+  console.log(userToken);
 
-  const [user, setUser] = useState(currentUser);
-  const logIn = ({ username, token }) => {
-    localStorage.setItem('user', JSON.stringify({ username, token }));
-    setUser({ username, token });
+  const [user, setUser] = useState(!!userToken);
+
+  const logIn = ({ token, username }) => {
+    localStorage.setItem('token', token);
+    localStorage.setItem('username', username);
+    setUser(true);
   };
   const logOut = () => {
-    localStorage.removeItem('user');
-    setUser(null);
-  };
-  const isAuthorized = () => {
-    if (!user) {
-      return false;
-    }
-    const { username, token } = user;
-    return !!username && !!token;
+    localStorage.removeItem('token');
+    localStorage.removeItem('username');
+    setUser(false);
   };
 
   return (
@@ -53,7 +47,6 @@ const UserProvider = ({ children }) => {
       user,
       logIn,
       logOut,
-      isAuthorized,
     }}
     >
       {children}
@@ -66,7 +59,7 @@ const ChatRoute = ({ children, path, exact }) => {
 
   return (
     <Route exact={exact} path={path}>
-      {auth.isAuthorized() ? children : <Redirect to="/login" />}
+      {auth.user ? children : <Redirect to="/login" />}
     </Route>
   );
 };
