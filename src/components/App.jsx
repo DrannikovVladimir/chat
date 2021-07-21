@@ -27,7 +27,6 @@ const renderModal = (type, onHide) => {
 
 const UserProvider = ({ children }) => {
   const userToken = localStorage.getItem('token');
-  console.log(userToken);
 
   const [user, setUser] = useState(!!userToken);
 
@@ -86,7 +85,7 @@ const App = () => {
             <Route path="/signup">
               <SignUpPage />
             </Route>
-            <Route>
+            <Route path="*">
               <NotFoundPage />
             </Route>
           </Switch>

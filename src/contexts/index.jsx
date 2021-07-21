@@ -7,7 +7,7 @@ const rollbar = new Rollbar({
   captureUnhandledRejections: true,
 });
 
-const UserContext = createContext({});
+const UserContext = createContext(null);
 const SocketContext = createContext(null);
 const RollbarContext = createContext(rollbar);
 
