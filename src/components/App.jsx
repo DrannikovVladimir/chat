@@ -27,6 +27,7 @@ const renderModal = (type, onHide) => {
 
 const UserProvider = ({ children }) => {
   const { localStorage } = window;
+  // localStorage.removeItem('user');
   const userData = JSON.parse(localStorage.getItem('user'));
   const currentUser = userData ?? null;
 
@@ -60,16 +61,13 @@ const UserProvider = ({ children }) => {
   );
 };
 
-const ChatRoute = ({ children, path }) => {
+const ChatRoute = ({ children, path, exact }) => {
   const auth = useUser();
 
   return (
-    <Route
-      path={path}
-      render={({ location }) => (auth.isAuthorized()
-        ? children
-        : <Redirect to={{ pathname: '/login', state: { from: location } }} />)}
-    />
+    <Route exact={exact} path={path}>
+      {auth.isAuthorized() ? children : <Redirect to="/login" />}
+    </Route>
   );
 };
 
