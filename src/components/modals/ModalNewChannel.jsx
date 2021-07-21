@@ -28,7 +28,7 @@ const ModalNewChannel = ({ onHide }) => {
         .max(20, `${t('validation.channel')}`)
         .notOneOf(channelsName, `${t('validation.channelUnique')}`),
     }),
-    onSubmit: (values, actions) => {
+    onSubmit: (values) => {
       const channel = { user: username, name: values.name };
       socket.emit('newChannel', channel, (res) => {
         if (res.status === 'ok') {
@@ -37,7 +37,6 @@ const ModalNewChannel = ({ onHide }) => {
           throw new Error(`${t('errors.network')}`);
         }
       });
-      actions.resetForm();
     },
   });
 
