@@ -28,7 +28,7 @@ const ModalRenameChannel = ({ onHide }) => {
         .max(20, `${t('validation.channel')}`)
         .notOneOf(channelsName, `${t('validation.channelUnique')}`),
     }),
-    onSubmit: (values, actions) => {
+    onSubmit: (values) => {
       const channel = { name: values.name, id: channelId.id };
       socket.emit('renameChannel', channel, (res) => {
         if (res.status === 'ok') {
@@ -37,13 +37,14 @@ const ModalRenameChannel = ({ onHide }) => {
           throw new Error(`${t('errors.network')}`);
         }
       });
-      actions.resetForm();
     },
   });
 
   useEffect(() => {
     inputRef.current.select();
   }, []);
+
+  console.log(formik.values.name);
 
   return (
     <Modal show={type !== null && type === 'renameChannel'} onHide={onHide}>
