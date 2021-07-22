@@ -19,7 +19,22 @@ const getAuthHeader = () => {
   return {};
 };
 
-const ChatPage = () => {
+const combineState = (outsideState, serverState) => {
+  if (!outsideState) {
+    return { ...serverState };
+  }
+
+  const channels = [...outsideState.channels, ...serverState.channels]
+    .sort((a, b) => a.id - b.id);
+  const messages = [...outsideState.messages, ...serverState.messages];
+  return {
+    channels,
+    messages,
+    currentChannelId: serverState.currentChannelId,
+  };
+};
+
+const ChatPage = ({ initialState }) => {
   const dispatch = useDispatch();
   const auth = useUser();
 
@@ -27,7 +42,8 @@ const ChatPage = () => {
     const fetchContent = async () => {
       try {
         const { data } = await axios.get('/api/v1/data', { headers: getAuthHeader() });
-        dispatch(setInitialState(data));
+        const generalState = combineState(initialState, data);
+        dispatch(setInitialState(generalState));
       } catch (err) {
         if (err.response.status === 401) {
           auth.logOut();

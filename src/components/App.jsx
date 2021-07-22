@@ -63,7 +63,7 @@ const ChatRoute = ({ children, path, exact }) => {
   );
 };
 
-const App = () => {
+const App = ({ initialState }) => {
   const dispatch = useDispatch();
   const { type } = useSelector(modalsSelector);
   const onHide = () => {
@@ -77,7 +77,7 @@ const App = () => {
           <NavBar />
           <Switch>
             <ChatRoute exact path="/">
-              <ChatPage />
+              <ChatPage initialState={initialState} />
             </ChatRoute>
             <Route path="/login">
               <LoginPage />

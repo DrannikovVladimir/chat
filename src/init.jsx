@@ -17,7 +17,7 @@ const SocketProvider = ({ children, socket }) => (
   </SocketContext.Provider>
 );
 
-const Init = async (socket) => {
+const Init = async (socket, state = null) => {
   i18n
     .use(initReactI18next)
     .init({
@@ -35,7 +35,7 @@ const Init = async (socket) => {
       <RollbarContext.Provider value={rollbar}>
         <SocketProvider socket={socket}>
           <I18nextProvider i18n={i18n}>
-            <App />
+            <App initialState={state} />
           </I18nextProvider>
         </SocketProvider>
       </RollbarContext.Provider>
