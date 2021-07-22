@@ -16,7 +16,7 @@ const ModalRemoveChannel = ({ onHide }) => {
       if (res.status === 'ok') {
         onHide();
       } else {
-        throw new Error(`${t('errors.network')}`);
+        throw new Error(t('errors.network'));
       }
     });
   };

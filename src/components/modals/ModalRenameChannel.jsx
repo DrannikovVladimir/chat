@@ -23,10 +23,10 @@ const ModalRenameChannel = ({ onHide }) => {
     },
     validationSchema: Yup.object({
       name: Yup.string()
-        .required(`${t('validation.required')}`)
-        .min(3, `${t('validation.channel')}`)
-        .max(20, `${t('validation.channel')}`)
-        .notOneOf(channelsName, `${t('validation.channelUnique')}`),
+        .required(t('validation.required'))
+        .min(3, t('validation.channel'))
+        .max(20, t('validation.channel'))
+        .notOneOf(channelsName, t('validation.channelUnique')),
     }),
     onSubmit: (values) => {
       const channel = { name: values.name, id: channelId.id };
@@ -34,7 +34,7 @@ const ModalRenameChannel = ({ onHide }) => {
         if (res.status === 'ok') {
           onHide();
         } else {
-          throw new Error(`${t('errors.network')}`);
+          throw new Error(t('errors.network'));
         }
       });
     },
@@ -43,8 +43,6 @@ const ModalRenameChannel = ({ onHide }) => {
   useEffect(() => {
     inputRef.current.select();
   }, []);
-
-  console.log(formik.values.name);
 
   return (
     <Modal show={type !== null && type === 'renameChannel'} onHide={onHide}>

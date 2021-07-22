@@ -23,10 +23,10 @@ const ModalNewChannel = ({ onHide }) => {
     },
     validationSchema: Yup.object({
       name: Yup.string()
-        .required(`${t('validation.required')}`)
-        .min(3, `${t('validation.channel')}`)
-        .max(20, `${t('validation.channel')}`)
-        .notOneOf(channelsName, `${t('validation.channelUnique')}`),
+        .required(t('validation.required'))
+        .min(3, t('validation.channel'))
+        .max(20, t('validation.channel'))
+        .notOneOf(channelsName, t('validation.channelUnique')),
     }),
     onSubmit: (values) => {
       const channel = { user: username, name: values.name };
@@ -34,7 +34,7 @@ const ModalNewChannel = ({ onHide }) => {
         if (res.status === 'ok') {
           onHide();
         } else {
-          throw new Error(`${t('errors.network')}`);
+          throw new Error(('errors.network'));
         }
       });
     },

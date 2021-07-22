@@ -27,14 +27,14 @@ const SignUpPage = () => {
     },
     validationSchema: Yup.object({
       username: Yup.string()
-        .required(`${t('validation.required')}`)
-        .min(3, `${t('validation.username')}`)
-        .max(20, `${t('validation.username')}`),
+        .required(t('validation.required'))
+        .min(3, t('validation.username'))
+        .max(20, t('validation.username')),
       password: Yup.string()
-        .required(`${t('validation.required')}`)
-        .min(6, `${t('validation.password')}`),
+        .required(t('validation.required'))
+        .min(6, t('validation.password')),
       passwordConfirmation: Yup.string()
-        .oneOf([Yup.ref('password'), null], `${t('validation.passwordConfirmation')}`),
+        .oneOf([Yup.ref('password'), null], t('validation.passwordConfirmation')),
     }),
     onSubmit: async (values, actions) => {
       try {
@@ -45,7 +45,7 @@ const SignUpPage = () => {
         history.push('/');
       } catch (err) {
         if (err.response.status === 409) {
-          actions.setFieldError('passwordConfirmation', `${t('registrationForm.error')}`);
+          actions.setFieldError('passwordConfirmation', t('registrationForm.error'));
           actions.setFieldError('password', ' ');
           actions.setFieldError('username', ' ');
           actions.setStatus('invalid');
