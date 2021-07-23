@@ -1,15 +1,7 @@
 import { createContext } from 'react';
-import Rollbar from 'rollbar';
-
-const rollbar = new Rollbar({
-  accessToken: process.env.TOKEN,
-  captureUncaught: true,
-  captureUnhandledRejections: true,
-});
 
 const UserContext = createContext(null);
 const SocketContext = createContext(null);
-const RollbarContext = createContext(rollbar);
+const RollbarContext = createContext(null);
 
 export { UserContext, SocketContext, RollbarContext };
-export default rollbar;

@@ -6,12 +6,12 @@ import { I18nextProvider, initReactI18next } from 'react-i18next';
 
 import store from './app/store.js';
 import resources from './locales/locales.js';
-import rollbar, { RollbarContext, SocketContext } from './contexts/index.jsx';
+import { RollbarContext, SocketContext } from './contexts/index.jsx';
 import { addMessage } from './slices/messagesSlice.js';
 import { newChannel, removeChannel, renameChannel } from './slices/channelsSlice.js';
 import App from './components/App.jsx';
 
-const init = async (socket, state = null) => {
+const init = async (socket, rollbar) => {
   const i18nInstance = await i18n.createInstance();
   i18nInstance
     .use(initReactI18next)
@@ -30,7 +30,7 @@ const init = async (socket, state = null) => {
       <RollbarContext.Provider value={rollbar}>
         <SocketContext.Provider value={socket}>
           <I18nextProvider i18n={i18nInstance}>
-            <App initialState={state} />
+            <App />
           </I18nextProvider>
         </SocketContext.Provider>
       </RollbarContext.Provider>
