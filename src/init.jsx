@@ -11,13 +11,7 @@ import { addMessage } from './slices/messagesSlice.js';
 import { newChannel, removeChannel, renameChannel } from './slices/channelsSlice.js';
 import App from './components/App.jsx';
 
-const SocketProvider = ({ children, socket }) => (
-  <SocketContext.Provider value={socket}>
-    {children}
-  </SocketContext.Provider>
-);
-
-const Init = async (socket, state = null) => {
+const init = async (socket, state = null) => {
   const i18nInstance = await i18n.createInstance();
   i18nInstance
     .use(initReactI18next)
@@ -34,14 +28,14 @@ const Init = async (socket, state = null) => {
   return (
     <Provider store={store}>
       <RollbarContext.Provider value={rollbar}>
-        <SocketProvider socket={socket}>
+        <SocketContext.Provider value={socket}>
           <I18nextProvider i18n={i18nInstance}>
             <App initialState={state} />
           </I18nextProvider>
-        </SocketProvider>
+        </SocketContext.Provider>
       </RollbarContext.Provider>
     </Provider>
   );
 };
 
-export default Init;
+export default init;
