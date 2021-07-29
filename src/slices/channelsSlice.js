@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createSelector } from '@reduxjs/toolkit';
 
 export const channelsSlice = createSlice({
   name: 'channels',
@@ -43,6 +43,12 @@ export const {
   renameChannel,
 } = channelsSlice.actions;
 
-export const channelsSelector = (state) => state.channels;
+export const channelsSelector = (state) => state.channels.channels;
+export const channelIdSelector = (state) => state.channels.currentChannelId;
+
+export const channelsNameSelector = createSelector(
+  [channelsSelector],
+  (channels) => channels.map((channel) => channel.name),
+);
 
 export default channelsSlice.reducer;

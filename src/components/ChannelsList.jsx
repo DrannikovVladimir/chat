@@ -3,13 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Dropdown, Button, ButtonGroup } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 
-import { setChannel, channelsSelector } from '../slices/channelsSlice.js';
+import { setChannel, channelsSelector, channelIdSelector } from '../slices/channelsSlice.js';
 import { openModal } from '../slices/modalsSlice.js';
 
 const ChannelsList = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { channels, currentChannelId } = useSelector(channelsSelector);
+  const channels = useSelector(channelsSelector);
+  const currentChannelId = useSelector(channelIdSelector);
   const getCurrentButton = (id) => (id === currentChannelId ? 'btn-primary' : 'btn-light');
   const getTypeButton = (id) => (id === currentChannelId ? 'primary' : 'light');
 

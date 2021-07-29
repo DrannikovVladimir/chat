@@ -14,7 +14,7 @@ const ModalRenameChannel = ({ onHide }) => {
   const socket = useSocket();
   const inputRef = useRef();
   const { type, channelId } = useSelector(modalsSelector);
-  const { channels } = useSelector(channelsSelector);
+  const channels = useSelector(channelsSelector);
   const channelsName = channels.map(({ name }) => name);
   const currentChannelName = channels.find((ch) => ch.id === channelId.id);
   const formik = useFormik({
