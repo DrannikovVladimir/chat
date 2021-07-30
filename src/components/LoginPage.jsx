@@ -12,6 +12,7 @@ import { useHistory, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import { useUser } from '../hooks/index.jsx';
+import routers from '../routes.js';
 
 const LoginPage = () => {
   const { t } = useTranslation();
@@ -26,7 +27,7 @@ const LoginPage = () => {
     onSubmit: async (values, actions) => {
       actions.setStatus(false);
       try {
-        const { data } = await axios.post('/api/v1/login', values);
+        const { data } = await axios.post(routers.loginPath(), values);
         user.logIn(data);
         history.push('/');
       } catch (err) {

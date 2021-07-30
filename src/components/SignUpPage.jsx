@@ -13,6 +13,7 @@ import { useHistory } from 'react-router-dom';
 import * as Yup from 'yup';
 
 import { useUser } from '../hooks/index.jsx';
+import routers from '../routes.js';
 
 const SignUpPage = () => {
   const { t } = useTranslation();
@@ -38,7 +39,7 @@ const SignUpPage = () => {
     }),
     onSubmit: async (values, actions) => {
       try {
-        const response = await axios.post('/api/v1/signup', values);
+        const response = await axios.post(routers.signupPath(), values);
         const { data } = response;
         user.logIn(data);
         actions.resetForm();
