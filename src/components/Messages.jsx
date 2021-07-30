@@ -2,11 +2,11 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 import { messagesSelector } from '../slices/messagesSlice.js';
-import { channelsSelector } from '../slices/channelsSlice.js';
+import { channelIdSelector } from '../slices/channelsSlice.js';
 
 const Messages = ({ children }) => {
   const { messages } = useSelector(messagesSelector);
-  const { currentChannelId } = useSelector(channelsSelector);
+  const currentChannelId = useSelector(channelIdSelector);
 
   return (
     <div className="col h-100">

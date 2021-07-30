@@ -7,7 +7,7 @@ import * as Yup from 'yup';
 
 import { useSocket } from '../../hooks/index.jsx';
 import { modalsSelector } from '../../slices/modalsSlice.js';
-import { channelsSelector } from '../../slices/channelsSlice.js';
+import { channelsSelector, channelsNameSelector } from '../../slices/channelsSlice.js';
 
 const ModalRenameChannel = ({ onHide }) => {
   const { t } = useTranslation();
@@ -15,7 +15,7 @@ const ModalRenameChannel = ({ onHide }) => {
   const inputRef = useRef();
   const { type, channelId } = useSelector(modalsSelector);
   const channels = useSelector(channelsSelector);
-  const channelsName = channels.map(({ name }) => name);
+  const channelsName = useSelector(channelsNameSelector);
   const currentChannelName = channels.find((ch) => ch.id === channelId.id);
   const formik = useFormik({
     initialValues: {
