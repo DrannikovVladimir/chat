@@ -6,9 +6,7 @@ import { channelIdSelector } from '../slices/channelsSlice.js';
 
 const Messages = ({ children }) => {
   const messages = useSelector(messagesSelector);
-  console.log(messages);
   const currentChannelId = useSelector(channelIdSelector);
-  console.log(currentChannelId);
 
   return (
     <div className="col h-100">
