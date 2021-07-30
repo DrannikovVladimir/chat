@@ -17,8 +17,9 @@ import NotFoundPage from './NotFoundPage.jsx';
 
 const UserProvider = ({ children }) => {
   const userToken = localStorage.getItem('token');
+  const userName = localStorage.getItem('username');
 
-  const [user, setUser] = useState(!!userToken);
+  const [user, setUser] = useState({ userName, userToken });
 
   const logIn = ({ token, username }) => {
     localStorage.setItem('token', token);
@@ -53,14 +54,14 @@ const ChatRoute = ({ children, path, exact }) => {
   );
 };
 
-const App = ({ initialState }) => (
+const App = () => (
   <UserProvider>
     <Router>
       <div className="d-flex flex-column h-100">
         <NavBar />
         <Switch>
           <ChatRoute exact path="/">
-            <ChatPage initialState={initialState} />
+            <ChatPage />
           </ChatRoute>
           <Route path="/login">
             <LoginPage />
