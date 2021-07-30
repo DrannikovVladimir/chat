@@ -4,11 +4,11 @@ import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 
 import { useSocket } from '../hooks/index.jsx';
-import { channelsSelector } from '../slices/channelsSlice.js';
+import { channelIdSelector } from '../slices/channelsSlice.js';
 
 const FormMessage = () => {
   const { t } = useTranslation();
-  const { currentChannelId } = useSelector(channelsSelector);
+  const currentChannelId = useSelector(channelIdSelector);
   const socket = useSocket();
   const inputRef = useRef();
   const username = localStorage.getItem('username');
