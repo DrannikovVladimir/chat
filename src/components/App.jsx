@@ -17,6 +17,13 @@ import NotFoundPage from './NotFoundPage.jsx';
 
 const UserProvider = ({ children }) => {
   const userToken = localStorage.getItem('token');
+  const getAuthHeader = () => {
+    if (userToken) {
+      return { Authorization: `Bearer ${userToken}` };
+    }
+
+    return {};
+  };
 
   const [user, setUser] = useState(!!userToken);
 
@@ -36,6 +43,7 @@ const UserProvider = ({ children }) => {
       user,
       logIn,
       logOut,
+      getAuthHeader,
     }}
     >
       {children}

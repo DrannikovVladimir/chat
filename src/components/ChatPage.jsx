@@ -10,16 +10,6 @@ import FormMessage from './FormMessage.jsx';
 import ChannelsList from './ChannelsList.jsx';
 import routers from '../routes.js';
 
-const getAuthHeader = () => {
-  const token = localStorage.getItem('token');
-
-  if (token) {
-    return { Authorization: `Bearer ${token}` };
-  }
-
-  return {};
-};
-
 const ChatPage = () => {
   const dispatch = useDispatch();
   const auth = useUser();
@@ -27,7 +17,7 @@ const ChatPage = () => {
   useEffect(() => {
     const fetchContent = async () => {
       try {
-        const { data } = await axios.get(routers.usersPath(), { headers: getAuthHeader() });
+        const { data } = await axios.get(routers.usersPath(), { headers: auth.getAuthHeader() });
         dispatch(setInitialState(data));
       } catch (err) {
         if (err.response.status === 401) {
