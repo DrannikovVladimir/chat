@@ -17,9 +17,8 @@ import NotFoundPage from './NotFoundPage.jsx';
 
 const UserProvider = ({ children }) => {
   const userToken = localStorage.getItem('token');
-  const userName = localStorage.getItem('username');
 
-  const [user, setUser] = useState({ userName, userToken });
+  const [user, setUser] = useState(!!userToken);
 
   const logIn = ({ token, username }) => {
     localStorage.setItem('token', token);
