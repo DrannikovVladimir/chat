@@ -7,7 +7,7 @@
 * [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli)   
 
 ### Libraries used  
-```sh
+
 * React   
 * Redux Toolkit   
 * Formik   
@@ -15,7 +15,7 @@
 * React Bootstrap   
 * Soket.io   
 * i18newxt
-``` 
+   
 
 ### Install   
 ```sh
