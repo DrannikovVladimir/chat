@@ -16,26 +16,24 @@ import NavBar from './NavBar.jsx';
 import NotFoundPage from './NotFoundPage.jsx';
 
 const UserProvider = ({ children }) => {
-  const userToken = localStorage.getItem('token');
+  const userData = JSON.parse(localStorage.getItem('userId'));
   const getAuthHeader = () => {
-    if (userToken) {
-      return { Authorization: `Bearer ${userToken}` };
+    if (userData?.token) {
+      return { Authorization: `Bearer ${userData.token}` };
     }
 
     return {};
   };
 
-  const [user, setUser] = useState(!!userToken);
+  const [user, setUser] = useState(userData);
 
-  const logIn = ({ token, username }) => {
-    localStorage.setItem('token', token);
-    localStorage.setItem('username', username);
-    setUser(true);
+  const logIn = (data) => {
+    localStorage.setItem('userId', JSON.stringify(data));
+    setUser(data);
   };
   const logOut = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('username');
-    setUser(false);
+    localStorage.removeItem('userId');
+    setUser(null);
   };
 
   return (
