@@ -15,10 +15,15 @@ import SignUpPage from './SignUpPage.jsx';
 import NavBar from './NavBar.jsx';
 import NotFoundPage from './NotFoundPage.jsx';
 
-const getUserData = (userData) => ({
-  token: userData?.token,
-  username: userData?.username,
-});
+const getUserData = (userData) => {
+  if (!userData) {
+    return null;
+  }
+  return {
+    token: userData.token,
+    username: userData.username,
+  };
+};
 
 const UserProvider = ({ children }) => {
   const userData = JSON.parse(localStorage.getItem('userId'));
