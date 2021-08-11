@@ -8,17 +8,19 @@
 
 ### Libraries used  
 ```sh
-React   
-Redux Toolkit   
-Formik   
-React Router Dom   
-React Bootstrap   
-Soket.io   
-i18newxt
+* React   
+* Redux Toolkit   
+* Formik   
+* React Router Dom   
+* React Bootstrap   
+* Soket.io   
+* i18newxt
 ``` 
 
 ### Install   
-```$ make install```   
+```sh
+$ make install
+```   
    
 
 ### Run   
