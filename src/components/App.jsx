@@ -40,11 +40,12 @@ const UserProvider = ({ children }) => {
   const logIn = useCallback((data) => {
     localStorage.setItem('userId', JSON.stringify(data));
     setUser(data);
-  });
+  }, []);
+
   const logOut = useCallback(() => {
     localStorage.removeItem('userId');
     setUser(null);
-  });
+  }, []);
 
   return (
     <UserContext.Provider value={{
