@@ -2,8 +2,13 @@
    
 ## Simple analog of [Slack (Chat)](https://stark-savannah-34514.herokuapp.com/)   
 
+### Requirements
+
+* [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli)   
+
 ### Libraries used  
-```React   
+```sh
+React   
 Redux Toolkit   
 Formik   
 React Router Dom   
@@ -17,6 +22,7 @@ i18newxt
    
 
 ### Run   
-```$ make start
+```sh
+$ make start   
 open http://localhost:5000
 ```
