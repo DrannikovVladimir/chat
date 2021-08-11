@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -37,14 +37,14 @@ const UserProvider = ({ children }) => {
 
   const [user, setUser] = useState(() => getUserData(userData));
 
-  const logIn = (data) => {
+  const logIn = useCallback((data) => {
     localStorage.setItem('userId', JSON.stringify(data));
     setUser(data);
-  };
-  const logOut = () => {
+  });
+  const logOut = useCallback(() => {
     localStorage.removeItem('userId');
     setUser(null);
-  };
+  });
 
   return (
     <UserContext.Provider value={{
