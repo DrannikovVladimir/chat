@@ -8,14 +8,15 @@
 
 ### Libraries used  
 
+```
 * React   
 * Redux Toolkit   
 * Formik   
 * React Router Dom   
 * React Bootstrap   
 * Soket.io   
-* i18newxt
-   
+* i18next
+```   
 
 ### Install   
 ```sh
