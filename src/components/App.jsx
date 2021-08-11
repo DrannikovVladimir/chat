@@ -15,6 +15,11 @@ import SignUpPage from './SignUpPage.jsx';
 import NavBar from './NavBar.jsx';
 import NotFoundPage from './NotFoundPage.jsx';
 
+const getUserData = ({ token, username }) => ({
+  token,
+  username,
+});
+
 const UserProvider = ({ children }) => {
   const userData = JSON.parse(localStorage.getItem('userId'));
   const getAuthHeader = () => {
@@ -25,7 +30,7 @@ const UserProvider = ({ children }) => {
     return {};
   };
 
-  const [user, setUser] = useState(userData);
+  const [user, setUser] = useState(() => getUserData(userData));
 
   const logIn = (data) => {
     localStorage.setItem('userId', JSON.stringify(data));
@@ -36,6 +41,8 @@ const UserProvider = ({ children }) => {
     setUser(null);
   };
 
+  const [counter, setCounter] = useState(0);
+
   return (
     <UserContext.Provider value={{
       user,
@@ -45,6 +52,7 @@ const UserProvider = ({ children }) => {
     }}
     >
       {children}
+      <button type="button" onClick={() => setCounter(counter + 1)}>{counter}</button>
     </UserContext.Provider>
   );
 };
