@@ -15,9 +15,9 @@ import SignUpPage from './SignUpPage.jsx';
 import NavBar from './NavBar.jsx';
 import NotFoundPage from './NotFoundPage.jsx';
 
-const getUserData = ({ token, username }) => ({
-  token,
-  username,
+const getUserData = (userData) => ({
+  token: userData?.token,
+  username: userData?.username,
 });
 
 const UserProvider = ({ children }) => {
@@ -41,8 +41,6 @@ const UserProvider = ({ children }) => {
     setUser(null);
   };
 
-  const [counter, setCounter] = useState(0);
-
   return (
     <UserContext.Provider value={{
       user,
@@ -52,7 +50,6 @@ const UserProvider = ({ children }) => {
     }}
     >
       {children}
-      <button type="button" onClick={() => setCounter(counter + 1)}>{counter}</button>
     </UserContext.Provider>
   );
 };
