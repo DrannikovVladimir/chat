@@ -19,14 +19,12 @@ const FormMessage = () => {
     onSubmit: (values, actions) => {
       try {
         const message = { text: values.body, user: username, channelId: currentChannelId };
-        socket.emit('newMessage', message, (res) => {
-          if (res.status === 'ok') {
-            actions.resetForm();
-            inputRef.current.focus();
-          }
-        });
+        socket.addNewMessage(message);
+        actions.resetForm();
+        inputRef.current.focus();
       } catch (err) {
         console.log(err);
+        throw new Error(err);
       }
     },
   });

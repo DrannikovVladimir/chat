@@ -9,13 +9,13 @@ const ModalRemoveChannel = ({ channelId, onHide }) => {
   const socket = useSocket();
 
   const removeChannelHandler = () => {
-    socket.emit('removeChannel', channelId, (res) => {
-      if (res.status === 'ok') {
-        onHide();
-      } else {
-        throw new Error(t('errors.network'));
-      }
-    });
+    try {
+      socket.removeCurrentChannel(channelId);
+      onHide();
+    } catch (err) {
+      console.log(err);
+      throw new Error(err);
+    }
   };
 
   return (

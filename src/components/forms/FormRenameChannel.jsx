@@ -28,13 +28,13 @@ const FormRenameChannel = ({ channelId, onHide }) => {
     }),
     onSubmit: (values) => {
       const channel = { name: values.name, id: channelId.id };
-      socket.emit('renameChannel', channel, (res) => {
-        if (res.status === 'ok') {
-          onHide();
-        } else {
-          throw new Error(t('errors.network'));
-        }
-      });
+      try {
+        socket.renameCurrentChannel(channel);
+        onHide();
+      } catch (err) {
+        console.log(err);
+        throw new Error(err);
+      }
     },
   });
 

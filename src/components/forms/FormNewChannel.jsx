@@ -27,13 +27,13 @@ const FormNewChannel = ({ onHide }) => {
     }),
     onSubmit: (values) => {
       const channel = { user: username, name: values.name };
-      socket.emit('newChannel', channel, (res) => {
-        if (res.status === 'ok') {
-          onHide();
-        } else {
-          throw new Error(('errors.network'));
-        }
-      });
+      try {
+        socket.addNewChannel(channel);
+        onHide();
+      } catch (err) {
+        console.log(err);
+        throw new Error(err);
+      }
     },
   });
 

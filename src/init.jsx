@@ -25,14 +25,41 @@ const init = async (socket, rollbar) => {
   socket.on('removeChannel', (channelId) => store.dispatch(removeChannel(channelId)));
   socket.on('renameChannel', (channel) => store.dispatch(renameChannel(channel)));
 
+  const SocketProvider = ({ children }) => {
+    const addNewMessage = (message) => {
+      socket.emit('newMessage', message, () => {});
+    };
+    const addNewChannel = (channel) => {
+      socket.emit('newChannel', channel, () => {});
+    };
+    const removeCurrentChannel = (channelId) => {
+      socket.emit('removeChannel', channelId, () => {});
+    };
+    const renameCurrentChannel = (channel) => {
+      socket.emit('renameChannel', channel, () => {});
+    };
+
+    return (
+      <SocketContext.Provider value={{
+        addNewMessage,
+        addNewChannel,
+        removeCurrentChannel,
+        renameCurrentChannel,
+      }}
+      >
+        {children}
+      </SocketContext.Provider>
+    );
+  };
+
   return (
     <Provider store={store}>
       <RollbarContext.Provider value={rollbar}>
-        <SocketContext.Provider value={socket}>
+        <SocketProvider>
           <I18nextProvider i18n={i18nInstance}>
             <App />
           </I18nextProvider>
-        </SocketContext.Provider>
+        </SocketProvider>
       </RollbarContext.Provider>
     </Provider>
   );
