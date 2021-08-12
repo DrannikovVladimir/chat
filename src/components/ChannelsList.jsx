@@ -37,32 +37,31 @@ const ChannelsList = () => {
             >
               {name}
             </Button>
-            { removable
-              ? (
-                <>
-                  <Dropdown.Toggle
-                    split
-                    variant={getTypeButton(id)}
-                    id="dropdown-split-basic"
-                    className="flex-grow-0"
-                  />
+            { removable ?? (
+              <>
+                <Dropdown.Toggle
+                  split
+                  variant={getTypeButton(id)}
+                  id="dropdown-split-basic"
+                  className="flex-grow-0"
+                />
 
-                  <Dropdown.Menu>
-                    <Dropdown.Item
-                      href=""
-                      onClick={openModalHandler('removeChannel', { id })}
-                    >
-                      {t('channels.remove')}
-                    </Dropdown.Item>
-                    <Dropdown.Item
-                      href=""
-                      onClick={openModalHandler('renameChannel', { id })}
-                    >
-                      {t('channels.rename')}
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </>
-              ) : null }
+                <Dropdown.Menu>
+                  <Dropdown.Item
+                    href=""
+                    onClick={openModalHandler('removeChannel', { id })}
+                  >
+                    {t('channels.remove')}
+                  </Dropdown.Item>
+                  <Dropdown.Item
+                    href=""
+                    onClick={openModalHandler('renameChannel', { id })}
+                  >
+                    {t('channels.rename')}
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </>
+            )}
           </Dropdown>
         </li>
       ))}
